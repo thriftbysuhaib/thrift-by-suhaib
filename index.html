@@ -704,7 +704,6 @@ function displayProducts(){
 
     });
 
-
     if(filtered.length === 0){
 
         container.innerHTML =
@@ -713,7 +712,6 @@ function displayProducts(){
         return;
 
     }
-
 
     filtered.forEach(product => {
 
@@ -744,11 +742,21 @@ function displayProducts(){
                         PKR ${product.price.toLocaleString()}
                     </div>
 
+                    <div class="product-details">
+                        <span>Size: ${product.size}</span>
+                        <span>Condition: ${product.condition}</span>
+                    </div>
+
+                    <div class="stock-status">
+                        ${product.stock > 0 ? "🟢 Available" : "🔴 Sold Out"}
+                    </div>
+
                     <button
                         class="add-btn"
                         onclick="addToCart(${index})"
+                        ${product.stock <= 0 ? "disabled" : ""}
                     >
-                        ADD TO CART
+                        ${product.stock > 0 ? "ADD TO CART" : "SOLD OUT"}
                     </button>
 
                 </div>
@@ -760,86 +768,6 @@ function displayProducts(){
     });
 
 }
-
-
-function setCategory(category,button){
-
-    currentCategory = category;
-
-    document
-        .querySelectorAll(".filters button")
-        .forEach(btn => btn.classList.remove("active"));
-
-    button.classList.add("active");
-
-    displayProducts();
-
-}
-
-
-function addToCart(index){
-
-    cart.push(products[index]);
-
-    updateCart();
-
-}
-
-
-function removeFromCart(index){
-
-    cart.splice(index,1);
-
-    updateCart();
-
-}
-
-
-function updateCart(){
-
-    document.getElementById("cartCount").innerText =
-        cart.length;
-
-    const container =
-        document.getElementById("cartItems");
-
-    if(cart.length === 0){
-
-        container.innerHTML =
-            '<div class="empty">Your cart is empty.</div>';
-
-    }else{
-
-        container.innerHTML = "";
-
-        cart.forEach((item,index) => {
-
-            container.innerHTML += `
-
-                <div class="cart-item">
-
-                    <div>
-                        <strong>${item.name}</strong>
-                        <br>
-                        PKR ${item.price.toLocaleString()}
-                    </div>
-
-                    <button
-                        class="remove"
-                        onclick="removeFromCart(${index})"
-                    >
-                        Remove
-                    </button>
-
-                </div>
-
-            `;
-
-        });
-
-    }
-
-
     let total = cart.reduce(
         (sum,item) => sum + item.price,
         0
