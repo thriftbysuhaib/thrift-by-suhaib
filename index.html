@@ -763,573 +763,809 @@ footer{
     © 2026 Thrift by Suhaib — Curated with care.
 </footer>
 
-
-<script>
-
-const WHATSAPP_NUMBER = "923001234567";
-
-let currentCategory = "all";
-
-let cart = [];
-
-
-/* PRODUCTS */
-
-const products = [
-
-    {
-        id:1,
-        name:"Vintage Black Tee",
-        price:1200,
-        category:"shirts",
-        size:"M",
-        condition:"Excellent",
-        stock:1,
-        description:"A clean vintage black tee with an easy everyday fit.",
-        image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-        id:2,
-        name:"Classic White Tee",
-        price:1000,
-        category:"shirts",
-        size:"L",
-        condition:"Very Good",
-        stock:1,
-        description:"Simple classic white tee, perfect for everyday outfits.",
-        image:"https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-        id:3,
-        name:"Vintage Street Shirt",
-        price:1500,
-        category:"shirts",
-        size:"M",
-        condition:"Excellent",
-        stock:1,
-        description:"A streetwear-inspired vintage shirt with a relaxed look.",
-        image:"https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-        id:4,
-        name:"Retro Sneakers",
-        price:2200,
-        category:"shoes",
-        size:"42",
-        condition:"Very Good",
-        stock:1,
-        description:"Retro-style sneakers with a classic everyday silhouette.",
-        image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-        id:5,
-        name:"Classic Sneakers",
-        price:2000,
-        category:"shoes",
-        size:"41",
-        condition:"Excellent",
-        stock:1,
-        description:"Minimal classic sneakers that work with almost any outfit.",
-        image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-        id:6,
-        name:"Oversized Grey Hoodie",
-        price:2500,
-        category:"hoodies",
-        size:"XL",
-        condition:"Excellent",
-        stock:1,
-        description:"Comfortable oversized grey hoodie with a clean aesthetic.",
-        image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-        id:7,
-        name:"Vintage Black Hoodie",
-        price:2300,
-        category:"hoodies",
-        size:"L",
-        condition:"Very Good",
-        stock:1,
-        description:"A versatile vintage black hoodie for everyday streetwear.",
-        image:"https://images.unsplash.com/photo-1509942774463-acf339cf87d5?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-        id:8,
-        name:"Graphic Vintage Tee",
-        price:1400,
-        category:"shirts",
-        size:"M",
-        condition:"Excellent",
-        stock:1,
-        description:"Graphic vintage tee with a relaxed casual feel.",
-        image:"https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=1000&q=85"
-    }
-
-];
-
-
-/* SHOP */
-
-function displayProducts(){
-
-    const container =
-        document.getElementById("products");
-
-    const search =
-        document.getElementById("search")
-        .value
-        .toLowerCase()
-        .trim();
-
-    const filtered =
-        products.filter(product => {
-
-            const matchesSearch =
-                product.name
-                .toLowerCase()
-                .includes(search);
-
-            const matchesCategory =
-                currentCategory === "all" ||
-                product.category === currentCategory;
-
-            return matchesSearch && matchesCategory;
-
-        });
-
-
-    if(filtered.length === 0){
-
-        container.innerHTML =
-            '<div class="empty">No items found.</div>';
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        filtered.map(product => {
-
-            const isInCart =
-                cart.includes(product.id);
-
-            return `
-
-                <article class="product">
-
-                    <div
-                        class="product-img"
-                        onclick="openProduct(${product.id})"
-                    >
-
-                        <img
-                            src="${product.image}"
-                            alt="${product.name}"
-                        >
-
-                    </div>
-
-                    <div class="product-info">
-
-                        <div class="product-category">
-                            ${product.category}
-                        </div>
-
-                        <h3>
-                            ${product.name}
-                        </h3>
-
-                        <div class="price">
-                            PKR ${product.price.toLocaleString()}
-                        </div>
-
-                        <div class="product-meta">
-
-                            <span class="meta">
-                                Size: ${product.size}
-                            </span>
-
-                            <span class="meta">
-                                ${product.condition}
-                            </span>
-
-                        </div>
-
-                        <div class="available">
-                            ${product.stock > 0
-                                ? "🟢 Available"
-                                : "🔴 Sold Out"}
-                        </div>
-
-                        <button
-                            class="add-btn"
-                            onclick="addToCart(${product.id})"
-                            ${product.stock <= 0 || isInCart
-                                ? "disabled"
-                                : ""}
-                        >
-                            ${isInCart
-                                ? "IN CART"
-                                : product.stock > 0
-                                    ? "ADD TO CART"
-                                    : "SOLD OUT"}
-                        </button>
-
-                    </div>
-
-                </article>
-
-            `;
-
-        }).join("");
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thrift by Suhaib</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
-
-
-/* CATEGORY */
-
-function setCategory(category, button){
-
-    currentCategory = category;
-
-    document
-        .querySelectorAll(".filter")
-        .forEach(btn => {
-            btn.classList.remove("active");
-        });
-
-    button.classList.add("active");
-
-    displayProducts();
-
+body{
+    font-family:Arial,sans-serif;
+    background:#f7f7f5;
+    color:#111;
 }
-
-
-/* PRODUCT DETAIL */
-
-function openProduct(id){
-
-    const product =
-        products.find(item => item.id === id);
-
-    if(!product) return;
-
-    document.getElementById("shopPage")
-        .style.display = "none";
-
-    document.getElementById("detailPage")
-        .style.display = "block";
-
-    const inCart =
-        cart.includes(product.id);
-
-    document.getElementById("detailContent").innerHTML = `
-
-        <div class="detail">
-
-            <div class="detail-image">
-
-                <img
-                    src="${product.image}"
-                    alt="${product.name}"
-                >
-
-            </div>
-
-            <div class="detail-info">
-
-                <div class="detail-category">
-                    ${product.category}
-                </div>
-
-                <h1>
-                    ${product.name}
-                </h1>
-
-                <div class="detail-price">
-                    PKR ${product.price.toLocaleString()}
-                </div>
-
-                <p class="detail-description">
-                    ${product.description}
-                </p>
-
-                <div class="detail-box">
-
-                    <div class="detail-row">
-                        <span>Size</span>
-                        <strong>${product.size}</strong>
-                    </div>
-
-                    <div class="detail-row">
-                        <span>Condition</span>
-                        <strong>${product.condition}</strong>
-                    </div>
-
-                    <div class="detail-row">
-                        <span>Quantity</span>
-                        <strong>1 available</strong>
-                    </div>
-
-                    <div class="detail-row">
-                        <span>Status</span>
-                        <strong>
-                            ${product.stock > 0
-                                ? "Available"
-                                : "Sold Out"}
-                        </strong>
-                    </div>
-
-                </div>
-
-                <button
-                    class="detail-add"
-                    onclick="addToCart(${product.id})"
-                    ${product.stock <= 0 || inCart
-                        ? "disabled"
-                        : ""}
-                >
-                    ${inCart
-                        ? "ALREADY IN CART"
-                        : product.stock > 0
-                            ? "ADD TO CART"
-                            : "SOLD OUT"}
-                </button>
-
-            </div>
-
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#111;
+    color:white;
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+}
+.logo{
+    color:white;
+    text-decoration:none;
+    font-size:21px;
+    font-weight:bold;
+}
+nav{
+    display:flex;
+    gap:25px;
+}
+nav a{
+    color:white;
+    text-decoration:none;
+}
+.cart-button{
+    border:0;
+    background:white;
+    color:#111;
+    padding:10px 16px;
+    border-radius:25px;
+    font-weight:bold;
+    cursor:pointer;
+}
+.hero{
+    min-height:75vh;
+    display:flex;
+    align-items:center;
+    padding:60px 7%;
+    background:#e8e6df;
+}
+.hero small{
+    letter-spacing:3px;
+    font-weight:bold;
+}
+.hero h1{
+    font-family:Georgia,serif;
+    font-size:clamp(55px,9vw,100px);
+    line-height:.95;
+    margin:20px 0;
+}
+.hero p{
+    max-width:520px;
+    color:#555;
+    line-height:1.7;
+    font-size:17px;
+}
+.hero-btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:15px 24px;
+    background:#111;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+.section{
+    padding:80px 7%;
+}
+.section-title{
+    margin-bottom:30px;
+}
+.section-title h2{
+    font-family:Georgia,serif;
+    font-size:42px;
+    margin-top:8px;
+}
+.controls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:30px;
+}
+.search{
+    flex:1;
+    min-width:220px;
+    padding:14px;
+    border:1px solid #ddd;
+    outline:none;
+}
+.filter{
+    padding:13px 18px;
+    border:1px solid #ccc;
+    background:white;
+    cursor:pointer;
+}
+.filter.active{
+    background:#111;
+    color:white;
+}
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+}
+.product{
+    background:white;
+    border:1px solid #e2e2e2;
+    overflow:hidden;
+}
+.product-img{
+    height:320px;
+    cursor:pointer;
+    background:#eee;
+}
+.product-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.product-info{
+    padding:18px;
+}
+.product-category{
+    color:#777;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    margin-bottom:7px;
+}
+.product-info h3{
+    font-size:18px;
+    margin-bottom:8px;
+}
+.price{
+    font-weight:bold;
+    margin-bottom:14px;
+}
+.product-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:12px;
+}
+.meta{
+    font-size:12px;
+    background:#f1f1ee;
+    padding:6px 8px;
+}
+.available{
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:14px;
+}
+.add-btn,
+.detail-add{
+    width:100%;
+    padding:13px;
+    border:0;
+    background:#111;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+.add-btn:disabled,
+.detail-add:disabled{
+    background:#aaa;
+    cursor:not-allowed;
+}
+.about{
+    background:#111;
+    color:white;
+}
+.about p{
+    max-width:700px;
+    color:#ccc;
+    line-height:1.8;
+    margin-top:20px;
+}
+.contact-box{
+    background:white;
+    padding:30px;
+    border:1px solid #ddd;
+    line-height:1.8;
+}
+footer{
+    background:#111;
+    color:#aaa;
+    text-align:center;
+    padding:28px;
+}
+/* DETAIL */
+.detail-page{
+    display:none;
+    min-height:100vh;
+    padding:40px 7%;
+}
+.detail-back{
+    border:0;
+    background:none;
+    font-weight:bold;
+    cursor:pointer;
+    margin-bottom:30px;
+}
+.detail{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    max-width:1100px;
+    margin:auto;
+}
+.detail-image{
+    height:600px;
+    background:#eee;
+}
+.detail-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.detail-info{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.detail-category{
+    color:#777;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    font-size:12px;
+}
+.detail-info h1{
+    font-family:Georgia,serif;
+    font-size:52px;
+    line-height:1;
+    margin:15px 0;
+}
+.detail-price{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:22px;
+}
+.detail-description{
+    color:#666;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+.detail-box{
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+    padding:15px 0;
+    margin-bottom:25px;
+}
+.detail-row{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+}
+/* CART */
+.cart-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    z-index:2000;
+}
+.cart{
+    position:absolute;
+    right:0;
+    top:0;
+    width:min(430px,100%);
+    height:100%;
+    background:white;
+    padding:25px;
+    overflow-y:auto;
+}
+.cart-head{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+.close-cart{
+    border:0;
+    background:none;
+    font-size:25px;
+    cursor:pointer;
+}
+.cart-item{
+    display:flex;
+    gap:12px;
+    border-bottom:1px solid #ddd;
+    padding:15px 0;
+}
+.cart-item img{
+    width:75px;
+    height:85px;
+    object-fit:cover;
+}
+.cart-item-info{
+    flex:1;
+}
+.remove{
+    border:0;
+    background:none;
+    color:#777;
+    cursor:pointer;
+    margin-top:7px;
+}
+.cart-total{
+    display:flex;
+    justify-content:space-between;
+    font-weight:bold;
+    font-size:19px;
+    margin:25px 0;
+}
+.whatsapp{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    background:#111;
+    color:white;
+    padding:15px;
+    font-weight:bold;
+}
+.empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:60px;
+    color:#777;
+}
+@media(max-width:1000px){
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+    .detail{
+        grid-template-columns:1fr;
+    }
+}
+@media(max-width:650px){
+    header{
+        padding:0 4%;
+    }
+    nav{
+        display:none;
+    }
+    .hero{
+        min-height:70vh;
+        padding:50px 6%;
+    }
+    .hero h1{
+        font-size:58px;
+    }
+    .section{
+        padding:60px 5%;
+    }
+    .products{
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+    }
+    .product-img{
+        height:230px;
+    }
+    .product-info{
+        padding:12px;
+    }
+    .product-info h3{
+        font-size:15px;
+    }
+    .detail{
+        grid-template-columns:1fr;
+    }
+    .detail-image{
+        height:420px;
+    }
+    .detail-info h1{
+        font-size:40px;
+    }
+}
+</style>
+</head>
+<body>
+<header>
+    <a href="#" class="logo" onclick="showShop()">THRIFT BY SUHAIB</a>
+    <nav>
+        <a href="#shop">SHOP</a>
+        <a href="#about">ABOUT</a>
+        <a href="#contact">CONTACT</a>
+    </nav>
+    <button class="cart-button" onclick="openCart()">
+        CART (<span id="cartCount">0</span>)
+    </button>
+</header>
+<main id="shopPage">
+<section class="hero">
+    <div>
+        <small>CURATED SECOND-HAND STYLE</small>
+        <h1>WEAR<br>YOUR<br>STORY.</h1>
+        <p>
+            Carefully selected thrift pieces, vintage finds and
+            everyday essentials. Unique clothes without the
+            unnecessary price tag.
+        </p>
+        <a href="#shop" class="hero-btn">SHOP THE DROP</a>
+    </div>
+</section>
+<section class="section" id="shop">
+    <div class="section-title">
+        <small>THE COLLECTION</small>
+        <h2>Latest Drops</h2>
+    </div>
+    <div class="controls">
+        <input
+            id="search"
+            class="search"
+            type="text"
+            placeholder="Search products..."
+            oninput="displayProducts()"
+        >
+        <button class="filter active" onclick="setCategory('all',this)">
+            All
+        </button>
+        <button class="filter" onclick="setCategory('shirts',this)">
+            Shirts
+        </button>
+        <button class="filter" onclick="setCategory('shoes',this)">
+            Shoes
+        </button>
+        <button class="filter" onclick="setCategory('hoodies',this)">
+            Hoodies
+        </button>
+    </div>
+    <div id="products" class="products"></div>
+</section>
+<section class="section about" id="about">
+    <small>OUR STORY</small>
+    <h2 style="font-family:Georgia,serif;font-size:42px;margin-top:10px;">
+        Good clothes deserve another life.
+    </h2>
+    <p>
+        Thrift by Suhaib is a small curated thrift store focused
+        on finding interesting, wearable and affordable pieces.
+        Every item is listed individually with its size,
+        condition and availability.
+    </p>
+</section>
+<section class="section" id="contact">
+    <div class="section-title">
+        <small>GET IN TOUCH</small>
+        <h2>Contact</h2>
+    </div>
+    <div class="contact-box">
+        <p><strong>Instagram:</strong> @thrift.by.suhaib</p>
+        <p><strong>WhatsApp:</strong> Available for orders</p>
+        <p>DM us for sizing questions, product details and order confirmation.</p>
+    </div>
+</section>
+</main>
+<section id="detailPage" class="detail-page">
+    <button class="detail-back" onclick="showShop()">
+        ← BACK TO SHOP
+    </button>
+    <div id="detailContent"></div>
+</section>
+<div id="cartOverlay" class="cart-overlay">
+    <div class="cart">
+        <div class="cart-head">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="closeCart()">
+                ×
+            </button>
         </div>
-
-    `;
-
-    window.scrollTo(0,0);
-
+        <div id="cartItems"></div>
+        <div class="cart-total">
+            <span>Total</span>
+            <span>PKR <span id="cartTotal">0</span></span>
+        </div>
+        <a
+            id="whatsappOrder"
+            class="whatsapp"
+            href="#"
+            target="_blank"
+        >
+            ORDER ON WHATSAPP
+        </a>
+    </div>
+</div>
+<footer>
+    © 2026 Thrift by Suhaib — Curated with care.
+</footer>
+<script>
+const WHATSAPP_NUMBER = "923001234567";
+let currentCategory = "all";
+let cart = [];
+const products = [
+{
+id:1,
+name:"Vintage Black Tee",
+price:1200,
+category:"shirts",
+size:"M",
+condition:"Excellent",
+stock:1,
+description:"A clean vintage black tee with an easy everyday fit.",
+image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=85"
+},
+{
+id:2,
+name:"Classic White Tee",
+price:1000,
+category:"shirts",
+size:"L",
+condition:"Very Good",
+stock:1,
+description:"Simple classic white tee, perfect for everyday outfits.",
+image:"https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=1000&q=85"
+},
+{
+id:3,
+name:"Vintage Street Shirt",
+price:1500,
+category:"shirts",
+size:"M",
+condition:"Excellent",
+stock:1,
+description:"A streetwear-inspired vintage shirt with a relaxed look.",
+image:"https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=1000&q=85"
+},
+{
+id:4,
+name:"Retro Sneakers",
+price:2200,
+category:"shoes",
+size:"42",
+condition:"Very Good",
+stock:1,
+description:"Retro-style sneakers with a classic everyday silhouette.",
+image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85"
+},
+{
+id:5,
+name:"Classic Sneakers",
+price:2000,
+category:"shoes",
+size:"41",
+condition:"Excellent",
+stock:1,
+description:"Minimal classic sneakers that work with almost any outfit.",
+image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1000&q=85"
+},
+{
+id:6,
+name:"Oversized Grey Hoodie",
+price:2500,
+category:"hoodies",
+size:"XL",
+condition:"Excellent",
+stock:1,
+description:"Comfortable oversized grey hoodie with a clean aesthetic.",
+image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=85"
+},
+{
+id:7,
+name:"Vintage Black Hoodie",
+price:2300,
+category:"hoodies",
+size:"L",
+condition:"Very Good",
+stock:1,
+description:"A versatile vintage black hoodie for everyday streetwear.",
+image:"https://images.unsplash.com/photo-1509942774463-acf339cf87d5?auto=format&fit=crop&w=1000&q=85"
+},
+{
+id:8,
+name:"Graphic Vintage Tee",
+price:1400,
+category:"shirts",
+size:"M",
+condition:"Excellent",
+stock:1,
+description:"Graphic vintage tee with a relaxed casual feel.",
+image:"https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=1000&q=85"
 }
-
-
-/* BACK TO SHOP */
-
-function showShop(){
-
-    document.getElementById("detailPage")
-        .style.display = "none";
-
-    document.getElementById("shopPage")
-        .style.display = "block";
-
-    window.scrollTo(0,0);
-
+];
+function displayProducts(){
+const container=document.getElementById("products");
+if(!container) return;
+const searchElement=document.getElementById("search");
+const search=searchElement
+? searchElement.value.toLowerCase().trim()
+: "";
+const filtered=products.filter(product=>{
+const matchesSearch=product.name.toLowerCase().includes(search);
+const matchesCategory=
+currentCategory==="all" ||
+product.category===currentCategory;
+return matchesSearch && matchesCategory;
+});
+if(filtered.length===0){
+container.innerHTML='<div class="empty">No items found.</div>';
+return;
 }
-
-
-/* ADD TO CART */
-
-function addToCart(id){
-
-    const product =
-        products.find(item => item.id === id);
-
-    if(!product) return;
-
-    if(product.stock <= 0) return;
-
-    if(cart.includes(id)){
-
-        openCart();
-
-        return;
-
-    }
-
-    cart.push(id);
-
-    updateCart();
-
-    openCart();
-
+container.innerHTML=filtered.map(product=>{
+const isInCart=cart.includes(product.id);
+return `
+<article class="product">
+<div class="product-img" onclick="openProduct(${product.id})">
+<img src="${product.image}" alt="${product.name}">
+</div>
+<div class="product-info">
+<div class="product-category">
+${product.category}
+</div>
+<h3>${product.name}</h3>
+<div class="price">
+PKR ${product.price.toLocaleString()}
+</div>
+<div class="product-meta">
+<span class="meta">
+Size: ${product.size}
+</span>
+<span class="meta">
+${product.condition}
+</span>
+</div>
+<div class="available">
+${product.stock>0 ? "🟢 Available" : "🔴 Sold Out"}
+</div>
+<button
+class="add-btn"
+onclick="addToCart(${product.id})"
+${product.stock<=0 || isInCart ? "disabled" : ""}
+>
+${isInCart ? "IN CART" : "ADD TO CART"}
+</button>
+</div>
+</article>
+`;
+}).join("");
 }
-
-
-/* REMOVE */
-
-function removeFromCart(id){
-
-    cart =
-        cart.filter(itemId => itemId !== id);
-
-    updateCart();
-
-}
-
-
-/* UPDATE CART */
-
-function updateCart(){
-
-    const cartItems =
-        document.getElementById("cartItems");
-
-    document.getElementById("cartCount")
-        .textContent = cart.length;
-
-
-    if(cart.length === 0){
-
-        cartItems.innerHTML =
-            '<p style="color:#777;padding:20px 0;">Your cart is empty.</p>';
-
-        document.getElementById("cartTotal")
-            .textContent = "0";
-
-        updateWhatsApp();
-
-        displayProducts();
-
-        return;
-
-    }
-
-
-    let total = 0;
-
-
-    cartItems.innerHTML =
-        cart.map(id => {
-
-            const product =
-                products.find(item => item.id === id);
-
-            total += product.price;
-
-            return `
-
-                <div class="cart-item">
-
-                    <img
-                        src="${product.image}"
-                        alt="${product.name}"
-                    >
-
-                    <div class="cart-item-info">
-
-                        <h4>
-                            ${product.name}
-                        </h4>
-
-                        <div>
-                            Size: ${product.size}
-                        </div>
-
-                        <div>
-                            PKR ${product.price.toLocaleString()}
-                        </div>
-
-                        <button
-                            class="remove"
-                            onclick="removeFromCart(${product.id})"
-                        >
-                            REMOVE
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }).join("");
-
-
-    document.getElementById("cartTotal")
-        .textContent =
-            total.toLocaleString();
-
-    updateWhatsApp();
-
-    displayProducts();
-
-}
-
-
-/* WHATSAPP */
-
-function updateWhatsApp(){
-
-    let message =
-        "Assalamualaikum! I want to order from Thrift by Suhaib:%0A%0A";
-
-    let total = 0;
-
-    cart.forEach(id => {
-
-        const product =
-            products.find(item => item.id === id);
-
-        total += product.price;
-
-        message +=
-            "• " +
-            product.name +
-            " | Size: " +
-            product.size +
-            " | PKR " +
-            product.price +
-            "%0A";
-
-    });
-
-
-    message +=
-        "%0ATotal: PKR " +
-        total.toLocaleString();
-
-
-    document.getElementById("whatsappOrder")
-        .href =
-            "https://wa.me/" +
-            WHATSAPP_NUMBER +
-            "?text=" +
-            message;
-
-}
-
-
-/* OPEN CART */
-
-function openCart(){
-
-    document.getElementById("cartOverlay")
-        .style.display = "block";
-
-}
-
-
-/* CLOSE CART */
-
-function closeCart(){
-
-    document.getElementById("cartOverlay")
-        .style.display = "none";
-
-}
-
-
-/* INITIAL LOAD */
-
+function setCategory(category,button){
+currentCategory=category;
+document.querySelectorAll(".filter").forEach(btn=>{
+btn.classList.remove("active");
+});
+button.classList.add("active");
 displayProducts();
-
+}
+function openProduct(id){
+const product=products.find(item=>item.id===id);
+if(!product) return;
+document.getElementById("shopPage").style.display="none";
+document.getElementById("detailPage").style.display="block";
+const inCart=cart.includes(product.id);
+document.getElementById("detailContent").innerHTML=`
+<div class="detail">
+<div class="detail-image">
+<img src="${product.image}" alt="${product.name}">
+</div>
+<div class="detail-info">
+<div class="detail-category">
+${product.category}
+</div>
+<h1>${product.name}</h1>
+<div class="detail-price">
+PKR ${product.price.toLocaleString()}
+</div>
+<p class="detail-description">
+${product.description}
+</p>
+<div class="detail-box">
+<div class="detail-row">
+<span>Size</span>
+<strong>${product.size}</strong>
+</div>
+<div class="detail-row">
+<span>Condition</span>
+<strong>${product.condition}</strong>
+</div>
+<div class="detail-row">
+<span>Quantity</span>
+<strong>1 available</strong>
+</div>
+<div class="detail-row">
+<span>Status</span>
+<strong>${product.stock>0 ? "Available" : "Sold Out"}</strong>
+</div>
+</div>
+<button
+class="detail-add"
+onclick="addToCart(${product.id})"
+${product.stock<=0 || inCart ? "disabled" : ""}
+>
+${inCart ? "ALREADY IN CART" : "ADD TO CART"}
+</button>
+</div>
+</div>
+`;
+window.scrollTo(0,0);
+}
+function showShop(){
+document.getElementById("detailPage").style.display="none";
+document.getElementById("shopPage").style.display="block";
+window.scrollTo(0,0);
+}
+function addToCart(id){
+const product=products.find(item=>item.id===id);
+if(!product) return;
+if(product.stock<=0) return;
+if(!cart.includes(id)){
+cart.push(id);
+}
 updateCart();
-
+openCart();
+}
+function removeFromCart(id){
+cart=cart.filter(itemId=>itemId!==id);
+updateCart();
+}
+function updateCart(){
+const cartItems=document.getElementById("cartItems");
+document.getElementById("cartCount").textContent=cart.length;
+if(cart.length===0){
+cartItems.innerHTML=
+'<p style="color:#777;padding:20px 0;">Your cart is empty.</p>';
+document.getElementById("cartTotal").textContent="0";
+updateWhatsApp();
+displayProducts();
+return;
+}
+let total=0;
+cartItems.innerHTML=cart.map(id=>{
+const product=products.find(item=>item.id===id);
+if(!product) return "";
+total+=product.price;
+return `
+<div class="cart-item">
+<img src="${product.image}" alt="${product.name}">
+<div class="cart-item-info">
+<h4>${product.name}</h4>
+<div>Size: ${product.size}</div>
+<div>PKR ${product.price.toLocaleString()}</div>
+<button class="remove" onclick="removeFromCart(${product.id})">
+REMOVE
+</button>
+</div>
+</div>
+`;
+}).join("");
+document.getElementById("cartTotal").textContent=
+total.toLocaleString();
+updateWhatsApp();
+displayProducts();
+}
+function updateWhatsApp(){
+let message=
+"Assalamualaikum! I want to order from Thrift by Suhaib:%0A%0A";
+let total=0;
+cart.forEach(id=>{
+const product=products.find(item=>item.id===id);
+if(!product) return;
+total+=product.price;
+message+=
+"• "+product.name+
+" | Size: "+product.size+
+" | PKR "+product.price+
+"%0A";
+});
+message+="%0ATotal: PKR "+total.toLocaleString();
+const whatsapp=document.getElementById("whatsappOrder");
+if(whatsapp){
+whatsapp.href=
+"https://wa.me/"+
+WHATSAPP_NUMBER+
+"?text="+
+message;
+}
+}
+function openCart(){
+document.getElementById("cartOverlay").style.display="block";
+}
+function closeCart(){
+document.getElementById("cartOverlay").style.display="none";
+}
+displayProducts();
+updateCart();
 </script>
-
 </body>
 </html>
