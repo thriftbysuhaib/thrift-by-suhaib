@@ -1,1 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Thrift by Suhaib</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f7f5f0;
+    color:#171717;
+}
+
+header{
+    background:#111;
+    color:white;
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+}
+
+.cart{
+    background:white;
+    color:#111;
+    border:0;
+    padding:10px 15px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.hero{
+    min-height:75vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:60px 20px;
+    background:linear-gradient(135deg,#111,#333);
+    color:white;
+}
+
+.hero h1{
+    font-size:60px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:18px;
+    color:#ddd;
+    margin-bottom:30px;
+}
+
+.btn{
+    display:inline-block;
+    background:white;
+    color:#111;
+    padding:14px 25px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.section{
+    padding:60px 7%;
+}
+
+.section h2{
+    text-align:center;
+    font-size:35px;
+    margin-bottom:30px;
+}
+
+.controls{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:35px;
+}
+
+.controls input,
+.controls select{
+    padding:13px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    background:white;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:25px;
+}
+
+.product{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.product:hover{
+    transform:translateY(-5px);
+}
+
+.product img{
+    width:100%;
+    height:280px;
+    object-fit:cover;
+}
+
+.product-info{
+    padding:18px;
+}
+
+.product-info h3{
+    margin-bottom:8px;
+}
+
+.price{
+    font-weight:bold;
+    font-size:19px;
+    margin-bottom:15px;
+}
+
+.add{
+    width:100%;
+    padding:12px;
+    border:0;
+    border-radius:8px;
+    background:#111;
+    color:white;
+    cursor:pointer;
+}
+
+.about{
+    background:#111;
+    color:white;
+    text-align:center;
+}
+
+.about p{
+    max-width:700px;
+    margin:auto;
+    line-height:1.8;
+    color:#ccc;
+}
+
+footer{
+    background:#080808;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+#cartBox{
+    position:fixed;
+    right:-400px;
+    top:0;
+    width:350px;
+    max-width:90%;
+    height:100%;
+    background:white;
+    z-index:200;
+    padding:25px;
+    box-shadow:-5px 0 20px rgba(0,0,0,.2);
+    transition:.3s;
+    overflow:auto;
+}
+
+#cartBox.open{
+    right:0;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    font-size:25px;
+}
+
+.cart-item{
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.whatsapp{
+    display:block;
+    text-align:center;
+    background:#25D366;
+    color:white;
+    padding:14px;
+    border-radius:8px;
+    text-decoration:none;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+    .hero h1{
+        font-size:42px;
+    }
+
+    nav a{
+        display:none;
+    }
+
+    header{
+        padding:15px 5%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">THRIFT BY SUHAIB</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <button class="cart" onclick="openCart()">
+        🛒 Cart (<span id="count">0</span>)
+    </button>
+</header>
+
+<section class="hero" id="home">
+    <div>
+        <h1>THRIFT BY SUHAIB</h1>
+        <p>Unique thrift finds. Affordable prices. Your style.</p>
+        <a href="#shop" class="btn">SHOP NOW</a>
+    </div>
+</section>
+
+<section class="section" id="shop">
+
+    <h2>Latest Drops</h2>
+
+    <div class="controls">
+        <input
+            type="text"
+            id="search"
+            placeholder="Search products..."
+            onkeyup="showProducts()"
+        >
+
+        <select id="category" onchange="showProducts()">
+            <option value="all">All Items</option>
+            <option value="shirts">Shirts</option>
+            <option value="shoes">Shoes</option>
+            <option value="hoodies">Hoodies</option>
+        </select>
+    </div>
+
+    <div class="products" id="products"></div>
+
+</section>
+
+<section class="section about" id="about">
+
+    <h2>About Us</h2>
+
+    <p>
+        Welcome to Thrift by Suhaib — a place for unique, affordable and
+        aesthetic thrift pieces. Every item is carefully selected so you can
+        upgrade your wardrobe without breaking the bank.
+    </p>
+
+</section>
+
+<footer>
+    © 2026 Thrift by Suhaib | Karachi, Pakistan
+</footer>
+
+<div id="cartBox">
+
+    <span class="close" onclick="closeCart()">×</span>
+
+    <h2>Your Cart</h2>
+
+    <br>
+
+    <div id="cartItems"></div>
+
+    <h3>Total: PKR <span id="total">0</span></h3>
+
+    <a
+        id="whatsapp"
+        class="whatsapp"
+        href="#"
+        target="_blank"
+    >
+        Order on WhatsApp
+    </a>
+
+</div>
+
+<script>
+
+const products = [
+
+{
+    name:"Vintage Black Shirt",
+    price:1200,
+    category:"shirts",
+    image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+    name:"Classic Sneakers",
+    price:1800,
+    category:"shoes",
+    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+    name:"Oversized Hoodie",
+    price:2200,
+    category:"hoodies",
+    image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+    name:"Vintage White Tee",
+    price:1000,
+    category:"shirts",
+    image:"https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+    name:"Retro Running Shoes",
+    price:2000,
+    category:"shoes",
+    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+    name:"Streetwear Hoodie",
+    price:2500,
+    category:"hoodies",
+    image:"https://images.unsplash.com/photo-1509942774463-acf339cf87d5?auto=format&fit=crop&w=600&q=80"
+}
+
+];
+
+let cart=[];
+
+function showProducts(){
+
+    const container=document.getElementById("products");
+
+    const search=document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const category=document
+        .getElementById("category")
+        .value;
+
+    container.innerHTML="";
+
+    products
+    .filter(p =>
+        p.name.toLowerCase().includes(search) &&
+        (category==="all" || p.category===category)
+    )
+    .forEach((p,index)=>{
+
+        container.innerHTML += `
+
+        <div class="product">
+
+            <img src="${p.image}" alt="${p.name}">
+
+            <div class="product-info">
+
+                <h3>${p.name}</h3>
+
+                <div class="price">
+                    PKR ${p.price.toLocaleString()}
+                </div>
+
+                <button class="add" onclick="addToCart(${index})">
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+    });
+}
+
+function addToCart(index){
+
+    cart.push(products[index]);
+
+    document.getElementById("count").innerText=cart.length;
+
+    updateCart();
+
+}
+
+function updateCart(){
+
+    const items=document.getElementById("cartItems");
+
+    items.innerHTML="";
+
+    let total=0;
+
+    cart.forEach((item,index)=>{
+
+        total += item.price;
+
+        items.innerHTML += `
+
+        <div class="cart-item">
+
+            <strong>${item.name}</strong>
+
+            <br>
+
+            PKR ${item.price.toLocaleString()}
+
+            <br>
+
+            <button onclick="removeItem(${index})">
+                Remove
+            </button>
+
+        </div>
+
+        `;
+    });
+
+    document.getElementById("total").innerText=
+        total.toLocaleString();
+
+    const order=cart
+        .map(item => ${item.name} - PKR ${item.price})
+        .join("\n");
+
+    const message=
+        "Assalamualaikum! I want to order:\n\n"+
+        order+
+        "\n\nTotal: PKR "+
+        total;
+
+    const phone="923001234567";
+
+    document.getElementById("whatsapp").href=
+        "https://wa.me/"+phone+
+        "?text="+encodeURIComponent(message);
+}
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    document.getElementById("count").innerText=cart.length;
+
+    updateCart();
+}
+
+function openCart(){
+
+    document
+        .getElementById("cartBox")
+        .classList.add("open");
+
+}
+
+function closeCart(){
+
+    document
+        .getElementById("cartBox")
+        .classList.remove("open");
+
+}
+
+showProducts();
+
+</script>
+
+</body>
+</html>
