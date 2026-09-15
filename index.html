@@ -701,16 +701,12 @@ function displayProducts(){
             product.category === currentCategory;
 
         return matchesSearch && matchesCategory;
-
     });
 
     if(filtered.length === 0){
-
         container.innerHTML =
             '<div class="empty">No items found.</div>';
-
         return;
-
     }
 
     filtered.forEach(product => {
@@ -718,16 +714,13 @@ function displayProducts(){
         const index = products.indexOf(product);
 
         container.innerHTML += `
-
             <div class="product">
 
                 <div class="product-img">
-
                     <img
                         src="${product.image}"
                         alt="${product.name}"
                     >
-
                 </div>
 
                 <div class="product-info">
@@ -742,12 +735,9 @@ function displayProducts(){
                         PKR ${product.price.toLocaleString()}
                     </div>
 
-                    <div class="product-details">
-                        <span>Size: ${product.size}</span>
-                        <span>Condition: ${product.condition}</span>
-                    </div>
-
-                    <div class="stock-status">
+                    <div>
+                        Size: ${product.size}<br>
+                        Condition: ${product.condition}<br>
                         ${product.stock > 0 ? "🟢 Available" : "🔴 Sold Out"}
                     </div>
 
@@ -762,41 +752,9 @@ function displayProducts(){
                 </div>
 
             </div>
-
         `;
-
     });
-
 }
-    let total = cart.reduce(
-        (sum,item) => sum + item.price,
-        0
-    );
-
-
-    document.getElementById("cartTotal").innerText =
-        total.toLocaleString();
-
-
-    const orderText = cart.map(item =>
-        `${item.name} - PKR ${item.price}`
-    ).join("\n");
-
-
-    const message =
-        "Assalamualaikum! I want to order:\n\n" +
-        orderText +
-        "\n\nTotal: PKR " +
-        total;
-
-
-    document.getElementById("whatsappOrder").href =
-        "https://wa.me/923001234567?text=" +
-        encodeURIComponent(message);
-
-}
-
-
 function openCart(){
 
     document
