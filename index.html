@@ -1,154 +1,136 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Thrift by Suhaib</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
 <style>
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
 }
 
 body{
-    font-family:"DM Sans",sans-serif;
+    font-family:Arial, sans-serif;
     background:#f7f7f5;
     color:#111;
 }
 
-button{
-    font-family:inherit;
-    cursor:pointer;
-}
-
 header{
-    position:sticky;
-    top:0;
-    z-index:1000;
     background:#111;
     color:white;
-    height:72px;
+    padding:18px 6%;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 6%;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
 
 .logo{
     color:white;
     text-decoration:none;
-    font-size:22px;
-    font-weight:700;
+    font-size:20px;
+    font-weight:bold;
 }
 
 nav{
     display:flex;
-    gap:28px;
+    gap:25px;
 }
 
 nav a{
     color:white;
     text-decoration:none;
     font-size:14px;
-    font-weight:500;
 }
 
 .cart-button{
-    border:1px solid #555;
     background:white;
     color:#111;
+    border:0;
     padding:10px 16px;
-    border-radius:30px;
-    font-weight:600;
+    border-radius:25px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .hero{
-    min-height:80vh;
+    min-height:75vh;
+    background:#e8e6df;
     display:flex;
     align-items:center;
     padding:70px 7%;
-    background:#e8e6df;
-}
-
-.hero-content{
-    max-width:700px;
 }
 
 .hero small{
     letter-spacing:3px;
-    font-weight:700;
+    font-weight:bold;
 }
 
 .hero h1{
-    font-family:"Playfair Display",serif;
-    font-size:clamp(55px,9vw,110px);
-    line-height:.95;
+    font-family:Georgia,serif;
+    font-size:clamp(55px,9vw,100px);
+    line-height:.92;
     margin:20px 0;
 }
 
 .hero p{
     max-width:520px;
     color:#555;
-    font-size:17px;
     line-height:1.7;
+    font-size:17px;
 }
 
 .hero-btn{
     display:inline-block;
-    margin-top:30px;
+    margin-top:25px;
     background:#111;
     color:white;
+    padding:15px 25px;
     text-decoration:none;
-    padding:15px 24px;
-    border-radius:3px;
-    font-weight:700;
+    font-weight:bold;
 }
 
 .section{
-    padding:90px 7%;
+    padding:80px 7%;
 }
 
 .section-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
-    gap:20px;
-    margin-bottom:35px;
+    margin-bottom:30px;
+}
+
+.section-title small{
+    letter-spacing:2px;
+    color:#777;
 }
 
 .section-title h2{
-    font-family:"Playfair Display",serif;
-    font-size:45px;
+    font-family:Georgia,serif;
+    font-size:42px;
+    margin-top:8px;
 }
 
 .controls{
     display:flex;
     flex-wrap:wrap;
-    gap:12px;
-    margin-bottom:35px;
+    gap:10px;
+    margin-bottom:30px;
 }
 
 .search{
     flex:1;
     min-width:220px;
-    padding:14px 17px;
+    padding:14px;
     border:1px solid #ddd;
-    border-radius:4px;
-    background:white;
-    outline:none;
     font-size:15px;
 }
 
@@ -156,37 +138,29 @@ nav a{
     padding:13px 18px;
     border:1px solid #ccc;
     background:white;
-    border-radius:4px;
+    cursor:pointer;
 }
 
 .filter.active{
     background:#111;
     color:white;
-    border-color:#111;
 }
 
 .products{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:24px;
+    gap:22px;
 }
 
 .product{
     background:white;
-    border:1px solid #e4e4e4;
-    transition:.25s;
+    border:1px solid #ddd;
     overflow:hidden;
-}
-
-.product:hover{
-    transform:translateY(-5px);
-    box-shadow:0 12px 30px rgba(0,0,0,.08);
 }
 
 .product-img{
-    height:330px;
+    height:320px;
     background:#eee;
-    overflow:hidden;
     cursor:pointer;
 }
 
@@ -194,15 +168,10 @@ nav a{
     width:100%;
     height:100%;
     object-fit:cover;
-    transition:.4s;
-}
-
-.product:hover .product-img img{
-    transform:scale(1.04);
 }
 
 .product-info{
-    padding:20px;
+    padding:18px;
 }
 
 .product-category{
@@ -215,33 +184,31 @@ nav a{
 
 .product-info h3{
     font-size:18px;
-    margin-bottom:9px;
+    margin-bottom:8px;
 }
 
 .price{
-    font-weight:700;
-    font-size:17px;
-    margin-bottom:15px;
+    font-weight:bold;
+    margin-bottom:13px;
 }
 
 .product-meta{
     display:flex;
+    gap:6px;
     flex-wrap:wrap;
-    gap:7px;
-    margin-bottom:16px;
+    margin-bottom:13px;
 }
 
 .meta{
+    background:#f1f1ee;
+    padding:6px 8px;
     font-size:12px;
-    background:#f2f2ef;
-    padding:7px 9px;
-    border-radius:3px;
 }
 
 .available{
     font-size:12px;
-    font-weight:700;
-    margin-bottom:15px;
+    font-weight:bold;
+    margin-bottom:13px;
 }
 
 .add-btn{
@@ -250,7 +217,8 @@ nav a{
     border:0;
     background:#111;
     color:white;
-    font-weight:700;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .add-btn:disabled{
@@ -265,56 +233,44 @@ nav a{
 
 .about p{
     max-width:700px;
-    line-height:1.8;
     color:#ccc;
+    line-height:1.8;
     margin-top:20px;
 }
 
 .contact-box{
     background:white;
-    padding:35px;
     border:1px solid #ddd;
-}
-
-.contact-box p{
-    margin:10px 0;
-}
-
-footer{
-    background:#111;
-    color:#aaa;
-    text-align:center;
     padding:30px;
-    font-size:13px;
+    line-height:2;
 }
 
 /* PRODUCT DETAIL */
 
 .detail-page{
     display:none;
-    min-height:calc(100vh - 72px);
-    padding:50px 7%;
-    background:#f7f7f5;
+    min-height:100vh;
+    padding:40px 7%;
 }
 
 .detail-back{
-    border:0;
     background:none;
-    font-weight:700;
+    border:0;
+    font-weight:bold;
+    cursor:pointer;
     margin-bottom:30px;
-    font-size:15px;
 }
 
 .detail{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:55px;
     max-width:1100px;
     margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
 }
 
 .detail-image{
-    height:650px;
+    height:600px;
     background:#eee;
 }
 
@@ -331,23 +287,22 @@ footer{
 }
 
 .detail-category{
+    color:#777;
     text-transform:uppercase;
     letter-spacing:3px;
     font-size:12px;
-    color:#777;
 }
 
 .detail-info h1{
-    font-family:"Playfair Display",serif;
-    font-size:55px;
-    line-height:1;
+    font-family:Georgia,serif;
+    font-size:50px;
     margin:15px 0;
 }
 
 .detail-price{
     font-size:22px;
-    font-weight:700;
-    margin-bottom:25px;
+    font-weight:bold;
+    margin-bottom:20px;
 }
 
 .detail-description{
@@ -359,7 +314,7 @@ footer{
 .detail-box{
     border-top:1px solid #ddd;
     border-bottom:1px solid #ddd;
-    padding:18px 0;
+    padding:15px 0;
     margin-bottom:25px;
 }
 
@@ -370,12 +325,17 @@ footer{
 }
 
 .detail-add{
+    width:100%;
     padding:16px;
     background:#111;
     color:white;
     border:0;
-    font-weight:700;
-    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.detail-add:disabled{
+    background:#aaa;
 }
 
 /* CART */
@@ -384,7 +344,7 @@ footer{
     display:none;
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.45);
+    background:rgba(0,0,0,.5);
     z-index:2000;
 }
 
@@ -403,20 +363,21 @@ footer{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
 
 .close-cart{
-    border:0;
     background:none;
-    font-size:25px;
+    border:0;
+    font-size:26px;
+    cursor:pointer;
 }
 
 .cart-item{
     display:flex;
-    gap:14px;
-    border-bottom:1px solid #ddd;
+    gap:12px;
     padding:15px 0;
+    border-bottom:1px solid #ddd;
 }
 
 .cart-item img{
@@ -430,21 +391,21 @@ footer{
 }
 
 .cart-item-info h4{
-    margin-bottom:6px;
+    margin-bottom:5px;
 }
 
 .remove{
-    border:0;
     background:none;
+    border:0;
     color:#777;
-    font-size:12px;
-    margin-top:8px;
+    cursor:pointer;
+    margin-top:7px;
 }
 
 .cart-total{
     display:flex;
     justify-content:space-between;
-    font-weight:700;
+    font-weight:bold;
     font-size:19px;
     margin:25px 0;
 }
@@ -452,21 +413,26 @@ footer{
 .whatsapp{
     display:block;
     text-align:center;
-    text-decoration:none;
     background:#111;
     color:white;
     padding:15px;
-    font-weight:700;
+    text-decoration:none;
+    font-weight:bold;
 }
 
 .empty{
     grid-column:1/-1;
     text-align:center;
-    padding:70px;
+    padding:60px;
     color:#777;
 }
 
-/* MOBILE */
+footer{
+    background:#111;
+    color:#aaa;
+    text-align:center;
+    padding:28px;
+}
 
 @media(max-width:1000px){
 
@@ -478,17 +444,12 @@ footer{
         grid-template-columns:1fr;
     }
 
-    .detail-image{
-        height:500px;
-    }
-
 }
 
 @media(max-width:650px){
 
     header{
-        height:64px;
-        padding:0 4%;
+        padding:16px 4%;
     }
 
     nav{
@@ -508,10 +469,6 @@ footer{
         padding:60px 5%;
     }
 
-    .section-title h2{
-        font-size:36px;
-    }
-
     .products{
         grid-template-columns:1fr 1fr;
         gap:12px;
@@ -522,49 +479,48 @@ footer{
     }
 
     .product-info{
-        padding:13px;
+        padding:12px;
     }
 
     .product-info h3{
         font-size:15px;
     }
 
-    .price{
-        font-size:14px;
-    }
-
-    .detail-page{
-        padding:30px 5%;
+    .detail{
+        grid-template-columns:1fr;
     }
 
     .detail-image{
-        height:420px;
+        height:400px;
     }
 
     .detail-info h1{
-        font-size:40px;
+        font-size:38px;
     }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
 <header>
 
-    <a href="#" class="logo" onclick="showShop()">THRIFT BY SUHAIB</a>
+<a href="#" class="logo" onclick="showShop()">
+THRIFT BY SUHAIB
+</a>
 
-    <nav>
-        <a href="#shop">SHOP</a>
-        <a href="#about">ABOUT</a>
-        <a href="#contact">CONTACT</a>
-    </nav>
+<nav>
+<a href="#shop">SHOP</a>
+<a href="#about">ABOUT</a>
+<a href="#contact">CONTACT</a>
+</nav>
 
-    <button class="cart-button" onclick="openCart()">
-        CART (<span id="cartCount">0</span>)
-    </button>
+<button class="cart-button" onclick="openCart()">
+CART (<span id="cartCount">0</span>)
+</button>
 
 </header>
 
@@ -573,143 +529,149 @@ footer{
 
 <section class="hero">
 
-    <div class="hero-content">
+<div>
 
-        <small>CURATED SECOND-HAND STYLE</small>
+<small>CURATED SECOND-HAND STYLE</small>
 
-        <h1>WEAR<br>YOUR<br>STORY.</h1>
+<h1>
+WEAR<br>
+YOUR<br>
+STORY.
+</h1>
 
-        <p>
-            Carefully selected thrift pieces, vintage finds and
-            everyday essentials. Unique clothes without the
-            unnecessary price tag.
-        </p>
+<p>
+Carefully selected thrift pieces, vintage finds and
+everyday essentials. Unique clothes without the
+unnecessary price tag.
+</p>
 
-        <a href="#shop" class="hero-btn">
-            SHOP THE DROP
-        </a>
+<a href="#shop" class="hero-btn">
+SHOP THE DROP
+</a>
 
-    </div>
+</div>
 
 </section>
 
 
 <section class="section" id="shop">
 
-    <div class="section-title">
+<div class="section-title">
 
-        <div>
-            <small>THE COLLECTION</small>
-            <h2>Latest Drops</h2>
-        </div>
+<small>THE COLLECTION</small>
 
-    </div>
+<h2>Latest Drops</h2>
 
-
-    <div class="controls">
-
-        <input
-            id="search"
-            class="search"
-            type="text"
-            placeholder="Search products..."
-            oninput="displayProducts()"
-        >
-
-        <button
-            class="filter active"
-            onclick="setCategory('all',this)"
-        >
-            All
-        </button>
-
-        <button
-            class="filter"
-            onclick="setCategory('shirts',this)"
-        >
-            Shirts
-        </button>
-
-        <button
-            class="filter"
-            onclick="setCategory('shoes',this)"
-        >
-            Shoes
-        </button>
-
-        <button
-            class="filter"
-            onclick="setCategory('hoodies',this)"
-        >
-            Hoodies
-        </button>
-
-    </div>
+</div>
 
 
-    <div id="products" class="products"></div>
+<div class="controls">
+
+<input
+id="search"
+class="search"
+type="text"
+placeholder="Search products..."
+oninput="displayProducts()"
+>
+
+<button
+class="filter active"
+onclick="setCategory('all',this)"
+>
+All
+</button>
+
+<button
+class="filter"
+onclick="setCategory('shirts',this)"
+>
+Shirts
+</button>
+
+<button
+class="filter"
+onclick="setCategory('shoes',this)"
+>
+Shoes
+</button>
+
+<button
+class="filter"
+onclick="setCategory('hoodies',this)"
+>
+Hoodies
+</button>
+
+</div>
+
+
+<div id="products" class="products"></div>
 
 </section>
 
 
 <section class="section about" id="about">
 
-    <small>OUR STORY</small>
+<small>OUR STORY</small>
 
-    <h2 style="font-family:'Playfair Display',serif;font-size:45px;margin-top:12px;">
-        Good clothes deserve another life.
-    </h2>
+<h2 style="font-family:Georgia,serif;font-size:42px;margin-top:10px;">
+Good clothes deserve another life.
+</h2>
 
-    <p>
-        Thrift by Suhaib is a small curated thrift store focused
-        on finding interesting, wearable and affordable pieces.
-        Every item is listed individually with its size,
-        condition and availability so you know exactly what
-        you're getting.
-    </p>
+<p>
+Thrift by Suhaib is a small curated thrift store focused
+on finding interesting, wearable and affordable pieces.
+Every item is listed individually with its size,
+condition and availability.
+</p>
 
 </section>
 
 
 <section class="section" id="contact">
 
-    <div class="section-title">
-        <div>
-            <small>GET IN TOUCH</small>
-            <h2>Contact</h2>
-        </div>
-    </div>
+<div class="section-title">
 
-    <div class="contact-box">
+<small>GET IN TOUCH</small>
 
-        <p><strong>Instagram:</strong> @thrift.by.suhaib</p>
+<h2>Contact</h2>
 
-        <p>
-            <strong>WhatsApp:</strong>
-            Available for orders
-        </p>
+</div>
 
-        <p>
-            DM us for sizing questions, product details
-            and order confirmation.
-        </p>
+<div class="contact-box">
 
-    </div>
+<p>
+<strong>Instagram:</strong>
+@thrift.by.suhaib
+</p>
+
+<p>
+<strong>WhatsApp:</strong>
+Available for orders
+</p>
+
+<p>
+DM us for sizing questions, product details
+and order confirmation.
+</p>
+
+</div>
 
 </section>
 
 </main>
 
 
-<!-- PRODUCT DETAIL PAGE -->
+<!-- PRODUCT DETAIL -->
 
 <section id="detailPage" class="detail-page">
 
-    <button class="detail-back" onclick="showShop()">
-        ← BACK TO SHOP
-    </button>
+<button class="detail-back" onclick="showShop()">
+← BACK TO SHOP
+</button>
 
-    <div id="detailContent"></div>
+<div id="detailContent"></div>
 
 </section>
 
@@ -718,563 +680,62 @@ footer{
 
 <div id="cartOverlay" class="cart-overlay">
 
-    <div class="cart">
+<div class="cart">
 
-        <div class="cart-head">
+<div class="cart-head">
 
-            <h2>Your Cart</h2>
+<h2>Your Cart</h2>
 
-            <button
-                class="close-cart"
-                onclick="closeCart()"
-            >
-                ×
-            </button>
+<button class="close-cart" onclick="closeCart()">
+×
+</button>
 
-        </div>
+</div>
 
-        <div id="cartItems"></div>
+<div id="cartItems"></div>
 
-        <div class="cart-total">
+<div class="cart-total">
 
-            <span>Total</span>
+<span>Total</span>
 
-            <span>
-                PKR <span id="cartTotal">0</span>
-            </span>
+<span>
+PKR <span id="cartTotal">0</span>
+</span>
 
-        </div>
+</div>
 
-        <a
-            id="whatsappOrder"
-            class="whatsapp"
-            href="#"
-            target="_blank"
-        >
-            ORDER ON WHATSAPP
-        </a>
+<a
+id="whatsappOrder"
+class="whatsapp"
+href="#"
+target="_blank"
+>
+ORDER ON WHATSAPP
+</a>
 
-    </div>
+</div>
 
 </div>
 
 
 <footer>
-    © 2026 Thrift by Suhaib — Curated with care.
+
+© 2026 Thrift by Suhaib — Curated with care.
+
 </footer>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thrift by Suhaib</title>
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-body{
-    font-family:Arial,sans-serif;
-    background:#f7f7f5;
-    color:#111;
-}
-header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:#111;
-    color:white;
-    height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 6%;
-}
-.logo{
-    color:white;
-    text-decoration:none;
-    font-size:21px;
-    font-weight:bold;
-}
-nav{
-    display:flex;
-    gap:25px;
-}
-nav a{
-    color:white;
-    text-decoration:none;
-}
-.cart-button{
-    border:0;
-    background:white;
-    color:#111;
-    padding:10px 16px;
-    border-radius:25px;
-    font-weight:bold;
-    cursor:pointer;
-}
-.hero{
-    min-height:75vh;
-    display:flex;
-    align-items:center;
-    padding:60px 7%;
-    background:#e8e6df;
-}
-.hero small{
-    letter-spacing:3px;
-    font-weight:bold;
-}
-.hero h1{
-    font-family:Georgia,serif;
-    font-size:clamp(55px,9vw,100px);
-    line-height:.95;
-    margin:20px 0;
-}
-.hero p{
-    max-width:520px;
-    color:#555;
-    line-height:1.7;
-    font-size:17px;
-}
-.hero-btn{
-    display:inline-block;
-    margin-top:25px;
-    padding:15px 24px;
-    background:#111;
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-}
-.section{
-    padding:80px 7%;
-}
-.section-title{
-    margin-bottom:30px;
-}
-.section-title h2{
-    font-family:Georgia,serif;
-    font-size:42px;
-    margin-top:8px;
-}
-.controls{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:30px;
-}
-.search{
-    flex:1;
-    min-width:220px;
-    padding:14px;
-    border:1px solid #ddd;
-    outline:none;
-}
-.filter{
-    padding:13px 18px;
-    border:1px solid #ccc;
-    background:white;
-    cursor:pointer;
-}
-.filter.active{
-    background:#111;
-    color:white;
-}
-.products{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:22px;
-}
-.product{
-    background:white;
-    border:1px solid #e2e2e2;
-    overflow:hidden;
-}
-.product-img{
-    height:320px;
-    cursor:pointer;
-    background:#eee;
-}
-.product-img img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-.product-info{
-    padding:18px;
-}
-.product-category{
-    color:#777;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:2px;
-    margin-bottom:7px;
-}
-.product-info h3{
-    font-size:18px;
-    margin-bottom:8px;
-}
-.price{
-    font-weight:bold;
-    margin-bottom:14px;
-}
-.product-meta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    margin-bottom:12px;
-}
-.meta{
-    font-size:12px;
-    background:#f1f1ee;
-    padding:6px 8px;
-}
-.available{
-    font-size:12px;
-    font-weight:bold;
-    margin-bottom:14px;
-}
-.add-btn,
-.detail-add{
-    width:100%;
-    padding:13px;
-    border:0;
-    background:#111;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
-.add-btn:disabled,
-.detail-add:disabled{
-    background:#aaa;
-    cursor:not-allowed;
-}
-.about{
-    background:#111;
-    color:white;
-}
-.about p{
-    max-width:700px;
-    color:#ccc;
-    line-height:1.8;
-    margin-top:20px;
-}
-.contact-box{
-    background:white;
-    padding:30px;
-    border:1px solid #ddd;
-    line-height:1.8;
-}
-footer{
-    background:#111;
-    color:#aaa;
-    text-align:center;
-    padding:28px;
-}
-/* DETAIL */
-.detail-page{
-    display:none;
-    min-height:100vh;
-    padding:40px 7%;
-}
-.detail-back{
-    border:0;
-    background:none;
-    font-weight:bold;
-    cursor:pointer;
-    margin-bottom:30px;
-}
-.detail{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:50px;
-    max-width:1100px;
-    margin:auto;
-}
-.detail-image{
-    height:600px;
-    background:#eee;
-}
-.detail-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-.detail-info{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-.detail-category{
-    color:#777;
-    text-transform:uppercase;
-    letter-spacing:3px;
-    font-size:12px;
-}
-.detail-info h1{
-    font-family:Georgia,serif;
-    font-size:52px;
-    line-height:1;
-    margin:15px 0;
-}
-.detail-price{
-    font-size:22px;
-    font-weight:bold;
-    margin-bottom:22px;
-}
-.detail-description{
-    color:#666;
-    line-height:1.7;
-    margin-bottom:25px;
-}
-.detail-box{
-    border-top:1px solid #ddd;
-    border-bottom:1px solid #ddd;
-    padding:15px 0;
-    margin-bottom:25px;
-}
-.detail-row{
-    display:flex;
-    justify-content:space-between;
-    padding:7px 0;
-}
-/* CART */
-.cart-overlay{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.5);
-    z-index:2000;
-}
-.cart{
-    position:absolute;
-    right:0;
-    top:0;
-    width:min(430px,100%);
-    height:100%;
-    background:white;
-    padding:25px;
-    overflow-y:auto;
-}
-.cart-head{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:20px;
-}
-.close-cart{
-    border:0;
-    background:none;
-    font-size:25px;
-    cursor:pointer;
-}
-.cart-item{
-    display:flex;
-    gap:12px;
-    border-bottom:1px solid #ddd;
-    padding:15px 0;
-}
-.cart-item img{
-    width:75px;
-    height:85px;
-    object-fit:cover;
-}
-.cart-item-info{
-    flex:1;
-}
-.remove{
-    border:0;
-    background:none;
-    color:#777;
-    cursor:pointer;
-    margin-top:7px;
-}
-.cart-total{
-    display:flex;
-    justify-content:space-between;
-    font-weight:bold;
-    font-size:19px;
-    margin:25px 0;
-}
-.whatsapp{
-    display:block;
-    text-align:center;
-    text-decoration:none;
-    background:#111;
-    color:white;
-    padding:15px;
-    font-weight:bold;
-}
-.empty{
-    grid-column:1/-1;
-    text-align:center;
-    padding:60px;
-    color:#777;
-}
-@media(max-width:1000px){
-    .products{
-        grid-template-columns:repeat(2,1fr);
-    }
-    .detail{
-        grid-template-columns:1fr;
-    }
-}
-@media(max-width:650px){
-    header{
-        padding:0 4%;
-    }
-    nav{
-        display:none;
-    }
-    .hero{
-        min-height:70vh;
-        padding:50px 6%;
-    }
-    .hero h1{
-        font-size:58px;
-    }
-    .section{
-        padding:60px 5%;
-    }
-    .products{
-        grid-template-columns:1fr 1fr;
-        gap:12px;
-    }
-    .product-img{
-        height:230px;
-    }
-    .product-info{
-        padding:12px;
-    }
-    .product-info h3{
-        font-size:15px;
-    }
-    .detail{
-        grid-template-columns:1fr;
-    }
-    .detail-image{
-        height:420px;
-    }
-    .detail-info h1{
-        font-size:40px;
-    }
-}
-</style>
-</head>
-<body>
-<header>
-    <a href="#" class="logo" onclick="showShop()">THRIFT BY SUHAIB</a>
-    <nav>
-        <a href="#shop">SHOP</a>
-        <a href="#about">ABOUT</a>
-        <a href="#contact">CONTACT</a>
-    </nav>
-    <button class="cart-button" onclick="openCart()">
-        CART (<span id="cartCount">0</span>)
-    </button>
-</header>
-<main id="shopPage">
-<section class="hero">
-    <div>
-        <small>CURATED SECOND-HAND STYLE</small>
-        <h1>WEAR<br>YOUR<br>STORY.</h1>
-        <p>
-            Carefully selected thrift pieces, vintage finds and
-            everyday essentials. Unique clothes without the
-            unnecessary price tag.
-        </p>
-        <a href="#shop" class="hero-btn">SHOP THE DROP</a>
-    </div>
-</section>
-<section class="section" id="shop">
-    <div class="section-title">
-        <small>THE COLLECTION</small>
-        <h2>Latest Drops</h2>
-    </div>
-    <div class="controls">
-        <input
-            id="search"
-            class="search"
-            type="text"
-            placeholder="Search products..."
-            oninput="displayProducts()"
-        >
-        <button class="filter active" onclick="setCategory('all',this)">
-            All
-        </button>
-        <button class="filter" onclick="setCategory('shirts',this)">
-            Shirts
-        </button>
-        <button class="filter" onclick="setCategory('shoes',this)">
-            Shoes
-        </button>
-        <button class="filter" onclick="setCategory('hoodies',this)">
-            Hoodies
-        </button>
-    </div>
-    <div id="products" class="products"></div>
-</section>
-<section class="section about" id="about">
-    <small>OUR STORY</small>
-    <h2 style="font-family:Georgia,serif;font-size:42px;margin-top:10px;">
-        Good clothes deserve another life.
-    </h2>
-    <p>
-        Thrift by Suhaib is a small curated thrift store focused
-        on finding interesting, wearable and affordable pieces.
-        Every item is listed individually with its size,
-        condition and availability.
-    </p>
-</section>
-<section class="section" id="contact">
-    <div class="section-title">
-        <small>GET IN TOUCH</small>
-        <h2>Contact</h2>
-    </div>
-    <div class="contact-box">
-        <p><strong>Instagram:</strong> @thrift.by.suhaib</p>
-        <p><strong>WhatsApp:</strong> Available for orders</p>
-        <p>DM us for sizing questions, product details and order confirmation.</p>
-    </div>
-</section>
-</main>
-<section id="detailPage" class="detail-page">
-    <button class="detail-back" onclick="showShop()">
-        ← BACK TO SHOP
-    </button>
-    <div id="detailContent"></div>
-</section>
-<div id="cartOverlay" class="cart-overlay">
-    <div class="cart">
-        <div class="cart-head">
-            <h2>Your Cart</h2>
-            <button class="close-cart" onclick="closeCart()">
-                ×
-            </button>
-        </div>
-        <div id="cartItems"></div>
-        <div class="cart-total">
-            <span>Total</span>
-            <span>PKR <span id="cartTotal">0</span></span>
-        </div>
-        <a
-            id="whatsappOrder"
-            class="whatsapp"
-            href="#"
-            target="_blank"
-        >
-            ORDER ON WHATSAPP
-        </a>
-    </div>
-</div>
-<footer>
-    © 2026 Thrift by Suhaib — Curated with care.
-</footer>
+
 <script>
+
 const WHATSAPP_NUMBER = "923001234567";
+
 let currentCategory = "all";
+
 let cart = [];
+
+
 const products = [
+
 {
 id:1,
 name:"Vintage Black Tee",
@@ -1286,6 +747,7 @@ stock:1,
 description:"A clean vintage black tee with an easy everyday fit.",
 image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=85"
 },
+
 {
 id:2,
 name:"Classic White Tee",
@@ -1297,6 +759,7 @@ stock:1,
 description:"Simple classic white tee, perfect for everyday outfits.",
 image:"https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=1000&q=85"
 },
+
 {
 id:3,
 name:"Vintage Street Shirt",
@@ -1308,6 +771,7 @@ stock:1,
 description:"A streetwear-inspired vintage shirt with a relaxed look.",
 image:"https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=1000&q=85"
 },
+
 {
 id:4,
 name:"Retro Sneakers",
@@ -1319,6 +783,7 @@ stock:1,
 description:"Retro-style sneakers with a classic everyday silhouette.",
 image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85"
 },
+
 {
 id:5,
 name:"Classic Sneakers",
@@ -1330,6 +795,7 @@ stock:1,
 description:"Minimal classic sneakers that work with almost any outfit.",
 image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1000&q=85"
 },
+
 {
 id:6,
 name:"Oversized Grey Hoodie",
@@ -1341,6 +807,7 @@ stock:1,
 description:"Comfortable oversized grey hoodie with a clean aesthetic.",
 image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=85"
 },
+
 {
 id:7,
 name:"Vintage Black Hoodie",
@@ -1352,6 +819,7 @@ stock:1,
 description:"A versatile vintage black hoodie for everyday streetwear.",
 image:"https://images.unsplash.com/photo-1509942774463-acf339cf87d5?auto=format&fit=crop&w=1000&q=85"
 },
+
 {
 id:8,
 name:"Graphic Vintage Tee",
@@ -1363,209 +831,448 @@ stock:1,
 description:"Graphic vintage tee with a relaxed casual feel.",
 image:"https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=1000&q=85"
 }
+
 ];
+
+
 function displayProducts(){
+
 const container=document.getElementById("products");
-if(!container) return;
-const searchElement=document.getElementById("search");
-const search=searchElement
-? searchElement.value.toLowerCase().trim()
-: "";
-const filtered=products.filter(product=>{
-const matchesSearch=product.name.toLowerCase().includes(search);
-const matchesCategory=
-currentCategory==="all" ||
-product.category===currentCategory;
-return matchesSearch && matchesCategory;
-});
-if(filtered.length===0){
-container.innerHTML='<div class="empty">No items found.</div>';
+
+if(!container){
 return;
 }
-container.innerHTML=filtered.map(product=>{
-const isInCart=cart.includes(product.id);
+
+const searchInput=document.getElementById("search");
+
+let search="";
+
+if(searchInput){
+search=searchInput.value.toLowerCase().trim();
+}
+
+const filtered=products.filter(function(product){
+
+const searchMatch=
+product.name.toLowerCase().includes(search);
+
+const categoryMatch=
+currentCategory==="all" ||
+product.category===currentCategory;
+
+return searchMatch && categoryMatch;
+
+});
+
+
+if(filtered.length===0){
+
+container.innerHTML=
+'<div class="empty">No items found.</div>';
+
+return;
+
+}
+
+
+container.innerHTML=filtered.map(function(product){
+
+const inCart=cart.includes(product.id);
+
 return `
+
 <article class="product">
-<div class="product-img" onclick="openProduct(${product.id})">
-<img src="${product.image}" alt="${product.name}">
+
+<div
+class="product-img"
+onclick="openProduct(${product.id})"
+>
+
+<img
+src="${product.image}"
+alt="${product.name}"
+>
+
 </div>
+
 <div class="product-info">
+
 <div class="product-category">
 ${product.category}
 </div>
-<h3>${product.name}</h3>
+
+<h3>
+${product.name}
+</h3>
+
 <div class="price">
 PKR ${product.price.toLocaleString()}
 </div>
+
 <div class="product-meta">
+
 <span class="meta">
 Size: ${product.size}
 </span>
+
 <span class="meta">
 ${product.condition}
 </span>
+
 </div>
+
 <div class="available">
 ${product.stock>0 ? "🟢 Available" : "🔴 Sold Out"}
 </div>
+
 <button
 class="add-btn"
 onclick="addToCart(${product.id})"
-${product.stock<=0 || isInCart ? "disabled" : ""}
+${product.stock<=0 || inCart ? "disabled" : ""}
 >
-${isInCart ? "IN CART" : "ADD TO CART"}
+
+${inCart ? "IN CART" : "ADD TO CART"}
+
 </button>
+
 </div>
+
 </article>
+
 `;
+
 }).join("");
+
 }
+
+
 function setCategory(category,button){
+
 currentCategory=category;
-document.querySelectorAll(".filter").forEach(btn=>{
+
+document
+.querySelectorAll(".filter")
+.forEach(function(btn){
 btn.classList.remove("active");
 });
+
 button.classList.add("active");
+
 displayProducts();
+
 }
+
+
 function openProduct(id){
-const product=products.find(item=>item.id===id);
-if(!product) return;
+
+const product=products.find(function(item){
+return item.id===id;
+});
+
+if(!product){
+return;
+}
+
 document.getElementById("shopPage").style.display="none";
+
 document.getElementById("detailPage").style.display="block";
+
 const inCart=cart.includes(product.id);
+
 document.getElementById("detailContent").innerHTML=`
+
 <div class="detail">
+
 <div class="detail-image">
-<img src="${product.image}" alt="${product.name}">
+
+<img
+src="${product.image}"
+alt="${product.name}"
+>
+
 </div>
+
 <div class="detail-info">
+
 <div class="detail-category">
 ${product.category}
 </div>
-<h1>${product.name}</h1>
+
+<h1>
+${product.name}
+</h1>
+
 <div class="detail-price">
 PKR ${product.price.toLocaleString()}
 </div>
+
 <p class="detail-description">
 ${product.description}
 </p>
+
 <div class="detail-box">
+
 <div class="detail-row">
 <span>Size</span>
 <strong>${product.size}</strong>
 </div>
+
 <div class="detail-row">
 <span>Condition</span>
 <strong>${product.condition}</strong>
 </div>
+
 <div class="detail-row">
-<span>Quantity</span>
-<strong>1 available</strong>
+<span>Stock</span>
+<strong>${product.stock}</strong>
 </div>
+
 <div class="detail-row">
 <span>Status</span>
-<strong>${product.stock>0 ? "Available" : "Sold Out"}</strong>
+<strong>
+${product.stock>0 ? "Available" : "Sold Out"}
+</strong>
 </div>
+
 </div>
+
 <button
 class="detail-add"
 onclick="addToCart(${product.id})"
 ${product.stock<=0 || inCart ? "disabled" : ""}
 >
+
 ${inCart ? "ALREADY IN CART" : "ADD TO CART"}
+
 </button>
+
 </div>
+
 </div>
+
 `;
+
 window.scrollTo(0,0);
+
 }
+
+
 function showShop(){
+
 document.getElementById("detailPage").style.display="none";
+
 document.getElementById("shopPage").style.display="block";
+
 window.scrollTo(0,0);
+
 }
+
+
 function addToCart(id){
-const product=products.find(item=>item.id===id);
-if(!product) return;
-if(product.stock<=0) return;
+
+const product=products.find(function(item){
+return item.id===id;
+});
+
+if(!product){
+return;
+}
+
+if(product.stock<=0){
+return;
+}
+
 if(!cart.includes(id)){
 cart.push(id);
 }
+
 updateCart();
+
 openCart();
+
 }
+
+
 function removeFromCart(id){
-cart=cart.filter(itemId=>itemId!==id);
+
+cart=cart.filter(function(itemId){
+return itemId!==id;
+});
+
 updateCart();
+
 }
+
+
 function updateCart(){
+
 const cartItems=document.getElementById("cartItems");
-document.getElementById("cartCount").textContent=cart.length;
-if(cart.length===0){
-cartItems.innerHTML=
-'<p style="color:#777;padding:20px 0;">Your cart is empty.</p>';
-document.getElementById("cartTotal").textContent="0";
-updateWhatsApp();
-displayProducts();
+
+const cartCount=document.getElementById("cartCount");
+
+const cartTotal=document.getElementById("cartTotal");
+
+if(!cartItems || !cartCount || !cartTotal){
 return;
 }
+
+cartCount.textContent=cart.length;
+
+
+if(cart.length===0){
+
+cartItems.innerHTML=
+'<p style="color:#777;padding:20px 0;">Your cart is empty.</p>';
+
+cartTotal.textContent="0";
+
+updateWhatsApp();
+
+displayProducts();
+
+return;
+
+}
+
+
 let total=0;
-cartItems.innerHTML=cart.map(id=>{
-const product=products.find(item=>item.id===id);
-if(!product) return "";
+
+cartItems.innerHTML=cart.map(function(id){
+
+const product=products.find(function(item){
+return item.id===id;
+});
+
+if(!product){
+return "";
+}
+
 total+=product.price;
+
 return `
+
 <div class="cart-item">
-<img src="${product.image}" alt="${product.name}">
+
+<img
+src="${product.image}"
+alt="${product.name}"
+>
+
 <div class="cart-item-info">
-<h4>${product.name}</h4>
-<div>Size: ${product.size}</div>
-<div>PKR ${product.price.toLocaleString()}</div>
-<button class="remove" onclick="removeFromCart(${product.id})">
+
+<h4>
+${product.name}
+</h4>
+
+<div>
+Size: ${product.size}
+</div>
+
+<div>
+PKR ${product.price.toLocaleString()}
+</div>
+
+<button
+class="remove"
+onclick="removeFromCart(${product.id})"
+>
 REMOVE
 </button>
+
 </div>
+
 </div>
+
 `;
+
 }).join("");
-document.getElementById("cartTotal").textContent=
-total.toLocaleString();
+
+cartTotal.textContent=total.toLocaleString();
+
 updateWhatsApp();
+
 displayProducts();
+
 }
+
+
 function updateWhatsApp(){
+
+const whatsapp=document.getElementById("whatsappOrder");
+
+if(!whatsapp){
+return;
+}
+
 let message=
 "Assalamualaikum! I want to order from Thrift by Suhaib:%0A%0A";
+
 let total=0;
-cart.forEach(id=>{
-const product=products.find(item=>item.id===id);
-if(!product) return;
-total+=product.price;
-message+=
-"• "+product.name+
-" | Size: "+product.size+
-" | PKR "+product.price+
-"%0A";
+
+cart.forEach(function(id){
+
+const product=products.find(function(item){
+return item.id===id;
 });
-message+="%0ATotal: PKR "+total.toLocaleString();
-const whatsapp=document.getElementById("whatsappOrder");
-if(whatsapp){
+
+if(!product){
+return;
+}
+
+total+=product.price;
+
+message+=
+"• "+
+product.name+
+" | Size: "+
+product.size+
+" | PKR "+
+product.price+
+"%0A";
+
+});
+
+message+=
+"%0ATotal: PKR "+
+total.toLocaleString();
+
 whatsapp.href=
 "https://wa.me/"+
 WHATSAPP_NUMBER+
 "?text="+
 message;
+
 }
-}
+
+
 function openCart(){
-document.getElementById("cartOverlay").style.display="block";
+
+const overlay=document.getElementById("cartOverlay");
+
+if(overlay){
+overlay.style.display="block";
 }
+
+}
+
+
 function closeCart(){
-document.getElementById("cartOverlay").style.display="none";
+
+const overlay=document.getElementById("cartOverlay");
+
+if(overlay){
+overlay.style.display="none";
 }
+
+}
+
+
 displayProducts();
+
 updateCart();
+
 </script>
+
 </body>
+
 </html>
