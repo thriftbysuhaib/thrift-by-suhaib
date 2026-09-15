@@ -772,7 +772,16 @@ function closeCart(){
 
 }
 
+function addToCart(index){
 
+    const product = products[index];
+
+    cart.push(product);
+
+    updateCart();
+
+    openCart();
+}
 displayProducts();
 
 </script>
