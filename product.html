@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product | Thrift by Suhaib</title>
+    <meta name="description" content="View product details at Thrift by Suhaib.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container nav">
+            <a href="index.html" class="logo">
+                THRIFT BY SUHAIB
+            </a>
+            <nav class="nav-links">
+                <a href="index.html#shop">Shop</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+            <button class="cart-btn" onclick="openCart()">
+                Cart <span id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+    <!-- PRODUCT DETAIL -->
+    <main class="product-detail">
+        <div class="container">
+            <a href="index.html#shop" class="back-link">
+                ← BACK TO SHOP
+            </a>
+            <div id="product-detail-container">
+                <!-- Product will load here -->
+            </div>
+        </div>
+    </main>
+    <!-- CART MODAL -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-box">
+            <button class="close-cart" onclick="closeCart()">
+                ×
+            </button>
+            <h2>YOUR CART</h2>
+            <div id="cart-items">
+                <!-- Cart items appear here -->
+            </div>
+            <div class="cart-total">
+                <span>Total</span>
+                <strong id="cart-total">Rs. 0</strong>
+            </div>
+            <button
+                class="checkout-btn"
+                onclick="checkoutWhatsApp()">
+                ORDER ON WHATSAPP
+            </button>
+        </div>
+    </div>
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+    <script>
+        // ==========================================
+        // LOAD PRODUCT
+        // ==========================================
+        function loadProductPage() {
+            const container =
+                document.getElementById("product-detail-container");
+            const params =
+                new URLSearchParams(window.location.search);
+            const productId =
+                params.get("id");
+            const product =
+                products.find(function (item) {
+                    return item.id === productId;
+                });
+            if (!product) {
+                container.innerHTML = `
+                    <div class="no-products">
+                        <h2>PRODUCT NOT FOUND</h2>
+                        <p>This product may no longer be available.</p>
+                        <br>
+                        <a href="index.html#shop">
+                            ← Return to shop
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            document.title =
+                product.name + " | Thrift by Suhaib";
+            const availability =
+                product.stock > 0
+                    ? "AVAILABLE"
+                    : "SOLD OUT";
+            const button =
+                product.stock > 0
+                    ? `
+                        <button
+                            class="checkout-btn"
+                            onclick="orderProduct('${product.id}')">
+                            ORDER ON WHATSAPP
+                        </button>
+                        <button
+                            class="add-detail-cart"
+                            onclick="addToCart('${product.id}')">
+                            ADD TO CART
+                        </button>
+                    `
+                    : `
+                        <button
+                            class="checkout-btn"
+                            disabled>
+                            SOLD OUT
+                        </button>
+                    `;
+            const imageHTML =
+                product.image &&
+                product.image.trim() !== ""
+                ? `
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}">
+                  `
+                : `
+                    <div class="detail-no-image">
+                        PRODUCT IMAGE
+                    </div>
+                  `;
+            container.innerHTML = `
+                <div class="product-detail-grid">
+                    <!-- IMAGE -->
+                    <div class="product-detail-image">
+                        ${imageHTML}
+                    </div>
+                    <!-- INFORMATION -->
+                    <div class="product-detail-info">
+                        <p class="product-category">
+                            ${product.category}
+                        </p>
+                        <h1>
+                            ${product.name}
+                        </h1>
+                        <div class="detail-price">
+                            Rs. ${Number(product.price).toLocaleString()}
+                        </div>
+                        <div class="product-specs">
+                            <div>
+                                <span>SIZE</span>
+                                <strong>
+                                    ${product.size || "N/A"}
+                                </strong>
+                            </div>
+                            <div>
+                                <span>CONDITION</span>
+                                <strong>
+                                    ${product.condition || "N/A"}
+                                </strong>
+                            </div>
+                            <div>
+                                <span>AVAILABILITY</span>
+                                <strong>
+                                    ${availability}
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="detail-description">
+                            <h3>DESCRIPTION</h3>
+                            <p>
+                                ${product.description || "No description available."}
+                            </p>
+                        </div>
+                        <div class="detail-actions">
+                            ${button}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        // Load page
+        document.addEventListener(
+            "DOMContentLoaded",
+            loadProductPage
+        );
+    </script>
+    <!-- PRODUCT PAGE STYLES -->
+    <style>
+        .product-detail {
+            padding: 70px 0 110px;
+            min-height: 80vh;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 40px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .back-link:hover {
+            opacity: 0.5;
+        }
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 70px;
+            align-items: start;
+        }
+        .product-detail-image {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #e6e6e2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .product-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .detail-no-image {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #777;
+        }
+        .product-detail-info {
+            padding-top: 10px;
+        }
+        .product-detail-info h1 {
+            font-size: clamp(45px, 6vw, 80px);
+            line-height: 0.95;
+            letter-spacing: -3px;
+            margin-bottom: 20px;
+        }
+        .detail-price {
+            font-size: 25px;
+            font-weight: 800;
+            margin-bottom: 40px;
+        }
+        .product-specs {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 35px;
+        }
+        .product-specs div {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .product-specs div:last-child {
+            border-bottom: none;
+        }
+        .product-specs span {
+            font-size: 11px;
+            color: #777;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .product-specs strong {
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        .detail-description {
+            margin-bottom: 35px;
+        }
+        .detail-description h3 {
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .detail-description p {
+            color: #555;
+            font-size: 16px;
+        }
+        .detail-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .detail-actions .checkout-btn {
+            border: none;
+        }
+        .add-detail-cart {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #111;
+            color: #111;
+            padding: 15px;
+            font-weight: 800;
+        }
+        .add-detail-cart:hover {
+            background: #111;
+            color: white;
+        }
+        .checkout-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        @media (max-width: 800px) {
+            .product-detail {
+                padding: 45px 0 80px;
+            }
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .product-detail-info h1 {
+                font-size: 52px;
+            }
+        }
+    </style>
+</body>
+</html>
