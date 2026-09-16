@@ -1285,7 +1285,39 @@ overlay.style.display="none";
 displayProducts();
 
 updateCart();
+async function loadFirebaseProducts() {
+    try {
+        const snapshot = await db.collection("products").get();
 
+        if (snapshot.empty) return;
+
+        const firebaseProducts = snapshot.docs.map(doc => {
+            const data = doc.data();
+
+            return {
+                id: doc.id,
+                name: data.Name || data.name || "Unnamed Product",
+                price: Number(data.Price || data.price) || 0,
+                category: data.Category || data.category || "other",
+                size: data.Size || data.size || "N/A",
+                condition: data.Condition || data.condition || "Good",
+                stock: Number(data.stock) || 1,
+                description: data.description || "No description available.",
+                image: data.image || ""
+            };
+        });
+
+        if (firebaseProducts.length > 0) {
+            products = firebaseProducts;
+            displayProducts();
+        }
+
+    } catch (error) {
+        console.error("Firebase products error:", error);
+    }
+}
+
+loadFirebaseProducts();
 </script>
 
 </body>
