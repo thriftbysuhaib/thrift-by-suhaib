@@ -1,1 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Thrift by Suhaib — Editor</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f3f3f0;
+    color:#111;
+}
+
+.topbar{
+    background:#111;
+    color:white;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.topbar h1{
+    font-size:18px;
+}
+
+.save-btn{
+    border:0;
+    background:white;
+    color:#111;
+    padding:11px 18px;
+    border-radius:20px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:330px 1fr;
+    min-height:calc(100vh - 70px);
+}
+
+.sidebar{
+    background:white;
+    border-right:1px solid #ddd;
+    padding:25px;
+}
+
+.sidebar h2{
+    font-size:15px;
+    margin-bottom:20px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.menu button{
+    border:0;
+    background:#f1f1ee;
+    padding:13px;
+    text-align:left;
+    cursor:pointer;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.menu button.active{
+    background:#111;
+    color:white;
+}
+
+.editor{
+    padding:30px;
+}
+
+.panel{
+    background:white;
+    padding:25px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.panel h2{
+    margin-bottom:20px;
+    font-family:Georgia,serif;
+}
+
+.field{
+    margin-bottom:18px;
+}
+
+.field label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:7px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.field input,
+.field textarea,
+.field select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font:inherit;
+}
+
+.field textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.color-row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.color-row input[type="color"]{
+    width:55px;
+    height:42px;
+    padding:2px;
+}
+
+.preview-title{
+    margin:30px 0 15px;
+    font-size:13px;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.preview{
+    min-height:500px;
+    background:#fff;
+    border:1px solid #ddd;
+    overflow:hidden;
+}
+
+.preview-header{
+    background:#111;
+    color:white;
+    padding:18px 30px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.preview-hero{
+    padding:60px 40px;
+    min-height:350px;
+}
+
+.preview-hero small{
+    letter-spacing:2px;
+}
+
+.preview-hero h1{
+    font-family:Georgia,serif;
+    font-size:60px;
+    line-height:.9;
+    margin:20px 0;
+}
+
+.preview-hero p{
+    max-width:500px;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.preview-button{
+    display:inline-block;
+    padding:13px 20px;
+    background:#111;
+    color:white;
+}
+
+.preview-about{
+    padding:40px;
+    background:#111;
+    color:white;
+}
+
+.preview-about p{
+    margin-top:15px;
+    color:#ccc;
+    line-height:1.6;
+}
+
+.preview-contact{
+    padding:40px;
+}
+
+.preview-products{
+    padding:40px;
+}
+
+.preview-products h2{
+    font-family:Georgia,serif;
+    margin-bottom:20px;
+}
+
+.demo-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.demo-card{
+    background:#eee;
+    height:130px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+}
+
+.status{
+    margin-top:10px;
+    font-size:13px;
+    color:#555;
+}
+
+@media(max-width:850px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        border-right:0;
+        border-bottom:1px solid #ddd;
+    }
+
+    .preview-hero h1{
+        font-size:45px;
+    }
+
+    .demo-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+<h1>THRIFT BY SUHAIB — EDITOR</h1>
+
+<button class="save-btn" onclick="saveSettings()">
+💾 SAVE
+</button>
+
+</header>
+
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<h2>WEBSITE SETTINGS</h2>
+
+<div class="menu">
+
+<button class="active" onclick="showPanel('design',this)">
+🎨 Design
+</button>
+
+<button onclick="showPanel('hero',this)">
+🏠 Hero
+</button>
+
+<button onclick="showPanel('products',this)">
+🛍 Products
+</button>
+
+<button onclick="showPanel('about',this)">
+ℹ️ About
+</button>
+
+<button onclick="showPanel('contact',this)">
+📞 Contact
+</button>
+
+<button onclick="showPanel('settings',this)">
+⚙️ Settings
+</button>
+
+</div>
+
+</aside>
+
+
+<main class="editor">
+
+
+<!-- DESIGN -->
+
+<section id="design" class="panel">
+
+<h2>Design</h2>
+
+<div class="field">
+
+<label>Hero Background</label>
+
+<div class="color-row">
+
+<input
+type="color"
+id="heroBg"
+value="#151515"
+oninput="updatePreview()"
+>
+
+<span id="heroBgText">#151515</span>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>Hero Text Colour</label>
+
+<div class="color-row">
+
+<input
+type="color"
+id="heroText"
+value="#ffffff"
+oninput="updatePreview()"
+>
+
+<span id="heroTextText">#ffffff</span>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>Button Colour</label>
+
+<div class="color-row">
+
+<input
+type="color"
+id="buttonColor"
+value="#111111"
+oninput="updatePreview()"
+>
+
+<span id="buttonColorText">#111111</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- HERO -->
+
+<section id="hero" class="panel" style="display:none;">
+
+<h2>Hero Section</h2>
+
+<div class="field">
+
+<label>Small Heading</label>
+
+<input
+id="heroSmall"
+value="CURATED SECOND-HAND STYLE"
+oninput="updatePreview()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Main Heading</label>
+
+<textarea
+id="heroHeading"
+oninput="updatePreview()"
+>WEAR
+YOUR
+STORY.</textarea>
+
+</div>
+
+
+<div class="field">
+
+<label>Description</label>
+
+<textarea
+id="heroDescription"
+oninput="updatePreview()"
+>Carefully selected thrift pieces, vintage finds and everyday essentials. Unique clothes without the unnecessary price tag.</textarea>
+
+</div>
+
+
+<div class="field">
+
+<label>Button Text</label>
+
+<input
+id="heroButton"
+value="SHOP THE DROP"
+oninput="updatePreview()"
+>
+
+</div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section id="products" class="panel" style="display:none;">
+
+<h2>Products</h2>
+
+<p>
+Product management panel will be connected here.
+</p>
+
+<div class="status">
+Coming next: Add, edit, delete products, prices, sizes,
+conditions, stock and images.
+</div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about" class="panel" style="display:none;">
+
+<h2>About Section</h2>
+
+<div class="field">
+
+<label>About Heading</label>
+
+<input
+id="aboutHeading"
+value="Good clothes deserve another life."
+oninput="updatePreview()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>About Description</label>
+
+<textarea
+id="aboutDescription"
+oninput="updatePreview()"
+>Thrift by Suhaib is a small curated thrift store focused on finding interesting, wearable and affordable pieces.</textarea>
+
+</div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact" class="panel" style="display:none;">
+
+<h2>Contact</h2>
+
+<div class="field">
+
+<label>Instagram</label>
+
+<input
+id="instagram"
+value="@thrift.by.suhaib"
+oninput="updatePreview()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>WhatsApp</label>
+
+<input
+id="whatsapp"
+value="Available for orders"
+oninput="updatePreview()"
+>
+
+</div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section id="settings" class="panel" style="display:none;">
+
+<h2>Settings</h2>
+
+<div class="field">
+
+<label>Website Name</label>
+
+<input
+id="siteName"
+value="THRIFT BY SUHAIB"
+>
+
+</div>
+
+<div class="status">
+Editor V1 • Thrift by Suhaib
+</div>
+
+</section>
+
+
+<h3 class="preview-title">
+LIVE PREVIEW
+</h3>
+
+
+<div class="preview">
+
+<div class="preview-header">
+
+<strong>THRIFT BY SUHAIB</strong>
+
+<span>SHOP &nbsp; ABOUT &nbsp; CONTACT</span>
+
+</div>
+
+
+<div
+class="preview-hero"
+id="previewHero"
+>
+
+<small id="previewSmall">
+CURATED SECOND-HAND STYLE
+</small>
+
+<h1 id="previewHeading">
+WEAR<br>
+YOUR<br>
+STORY.
+</h1>
+
+<p id="previewDescription">
+Carefully selected thrift pieces, vintage finds and everyday essentials.
+Unique clothes without the unnecessary price tag.
+</p>
+
+<span
+class="preview-button"
+id="previewButton"
+>
+SHOP THE DROP
+</span>
+
+</div>
+
+
+<div class="preview-products">
+
+<h2>Latest Drops</h2>
+
+<div class="demo-grid">
+
+<div class="demo-card">Product 01</div>
+<div class="demo-card">Product 02</div>
+<div class="demo-card">Product 03</div>
+
+</div>
+
+</div>
+
+
+<div class="preview-about">
+
+<h2 id="previewAboutHeading">
+Good clothes deserve another life.
+</h2>
+
+<p id="previewAboutDescription">
+Thrift by Suhaib is a small curated thrift store focused on finding interesting, wearable and affordable pieces.
+</p>
+
+</div>
+
+
+<div class="preview-contact">
+
+<h2>Contact</h2>
+
+<p id="previewInstagram">
+Instagram: @thrift.by.suhaib
+</p>
+
+<p id="previewWhatsapp">
+WhatsApp: Available for orders
+</p>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<script>
+
+function showPanel(id,button){
+
+document.querySelectorAll(".panel").forEach(function(panel){
+
+panel.style.display="none";
+
+});
+
+document.getElementById(id).style.display="block";
+
+document.querySelectorAll(".menu button").forEach(function(btn){
+
+btn.classList.remove("active");
+
+});
+
+button.classList.add("active");
+
+}
+
+
+function updatePreview(){
+
+const heroBg=document.getElementById("heroBg").value;
+
+const heroText=document.getElementById("heroText").value;
+
+const buttonColor=document.getElementById("buttonColor").value;
+
+
+document.getElementById("previewHero").style.background=heroBg;
+
+document.getElementById("previewHero").style.color=heroText;
+
+document.getElementById("previewButton").style.background=buttonColor;
+
+
+document.getElementById("heroBgText").textContent=heroBg;
+
+document.getElementById("heroTextText").textContent=heroText;
+
+document.getElementById("buttonColorText").textContent=buttonColor;
+
+
+document.getElementById("previewSmall").textContent=
+document.getElementById("heroSmall").value;
+
+
+document.getElementById("previewHeading").innerHTML=
+document.getElementById("heroHeading").value.replace(/\n/g,"<br>");
+
+
+document.getElementById("previewDescription").textContent=
+document.getElementById("heroDescription").value;
+
+
+document.getElementById("previewButton").textContent=
+document.getElementById("heroButton").value;
+
+
+document.getElementById("previewAboutHeading").textContent=
+document.getElementById("aboutHeading").value;
+
+
+document.getElementById("previewAboutDescription").textContent=
+document.getElementById("aboutDescription").value;
+
+
+document.getElementById("previewInstagram").textContent=
+"Instagram: "+
+document.getElementById("instagram").value;
+
+
+document.getElementById("previewWhatsapp").textContent=
+"WhatsApp: "+
+document.getElementById("whatsapp").value;
+
+}
+
+
+function saveSettings(){
+
+const settings={
+
+heroBg:document.getElementById("heroBg").value,
+
+heroText:document.getElementById("heroText").value,
+
+buttonColor:document.getElementById("buttonColor").value,
+
+heroSmall:document.getElementById("heroSmall").value,
+
+heroHeading:document.getElementById("heroHeading").value,
+
+heroDescription:document.getElementById("heroDescription").value,
+
+heroButton:document.getElementById("heroButton").value,
+
+aboutHeading:document.getElementById("aboutHeading").value,
+
+aboutDescription:document.getElementById("aboutDescription").value,
+
+instagram:document.getElementById("instagram").value,
+
+whatsapp:document.getElementById("whatsapp").value
+
+};
+
+localStorage.setItem(
+"thriftBySuhaibSettings",
+JSON.stringify(settings)
+);
+
+alert("Settings saved on this device ✅");
+
+}
+
+
+function loadSettings(){
+
+const saved=localStorage.getItem(
+"thriftBySuhaibSettings"
+);
+
+if(!saved){
+updatePreview();
+return;
+}
+
+const settings=JSON.parse(saved);
+
+Object.keys(settings).forEach(function(key){
+
+const element=document.getElementById(key);
+
+if(element){
+element.value=settings[key];
+}
+
+});
+
+updatePreview();
+
+}
+
+
+loadSettings();
+
+</script>
+
+</body>
+</html>
