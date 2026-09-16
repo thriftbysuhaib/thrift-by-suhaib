@@ -751,107 +751,27 @@ let currentCategory = "all";
 let cart = [];
 
 
-const products = [
+let products = [];
 
-{
-id:1,
-name:"Vintage Black Tee",
-price:1200,
-category:"shirts",
-size:"M",
-condition:"Excellent",
-stock:1,
-description:"A clean vintage black tee with an easy everyday fit.",
-image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=85"
-},
+async function loadProducts() {
+    try {
+        const snapshot = await db.collection("products").get();
 
-{
-id:2,
-name:"Classic White Tee",
-price:1000,
-category:"shirts",
-size:"L",
-condition:"Very Good",
-stock:1,
-description:"Simple classic white tee, perfect for everyday outfits.",
-image:"https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=1000&q=85"
-},
+        products = snapshot.docs.map(function(doc) {
+            return {
+                id: doc.id,
+                ...doc.data()
+            };
+        });
 
-{
-id:3,
-name:"Vintage Street Shirt",
-price:1500,
-category:"shirts",
-size:"M",
-condition:"Excellent",
-stock:1,
-description:"A streetwear-inspired vintage shirt with a relaxed look.",
-image:"https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=1000&q=85"
-},
+        displayProducts();
 
-{
-id:4,
-name:"Retro Sneakers",
-price:2200,
-category:"shoes",
-size:"42",
-condition:"Very Good",
-stock:1,
-description:"Retro-style sneakers with a classic everyday silhouette.",
-image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85"
-},
-
-{
-id:5,
-name:"Classic Sneakers",
-price:2000,
-category:"shoes",
-size:"41",
-condition:"Excellent",
-stock:1,
-description:"Minimal classic sneakers that work with almost any outfit.",
-image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1000&q=85"
-},
-
-{
-id:6,
-name:"Oversized Grey Hoodie",
-price:2500,
-category:"hoodies",
-size:"XL",
-condition:"Excellent",
-stock:1,
-description:"Comfortable oversized grey hoodie with a clean aesthetic.",
-image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=85"
-},
-
-{
-id:7,
-name:"Vintage Black Hoodie",
-price:2300,
-category:"hoodies",
-size:"L",
-condition:"Very Good",
-stock:1,
-description:"A versatile vintage black hoodie for everyday streetwear.",
-image:"https://images.unsplash.com/photo-1509942774463-acf339cf87d5?auto=format&fit=crop&w=1000&q=85"
-},
-
-{
-id:8,
-name:"Graphic Vintage Tee",
-price:1400,
-category:"shirts",
-size:"M",
-condition:"Excellent",
-stock:1,
-description:"Graphic vintage tee with a relaxed casual feel.",
-image:"https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=1000&q=85"
+    } catch (error) {
+        console.error("Firebase error:", error);
+    }
 }
 
-];
-
-
+loadProducts();
 function displayProducts(){
 
 const container=document.getElementById("products");
