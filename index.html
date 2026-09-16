@@ -2,61 +2,157 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-    <title>Product | Thrift by Suhaib</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thrift by Suhaib</title>
+    <meta name="description" content="Thrift by Suhaib — curated thrifted footwear and uppers.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="header">
-    <a href="index.html" class="logo">
-        THRIFT BY SUHAIB
-    </a>
-    <nav>
-        <a href="index.html#shop">
-            Shop
-        </a>
-        <button
-            class="cart-button"
-            onclick="openCart()"
-        >
-            Cart <span id="cartCount">0</span>
-        </button>
-    </nav>
-</header>
-<main class="product-page">
-    <div id="productDetails"></div>
-</main>
-<!-- CART -->
-<div id="cartOverlay" class="cart-overlay">
-    <div class="cart">
-        <button
-            class="close-cart"
-            onclick="closeCart()"
-        >
-            ×
-        </button>
-        <h2>Your Cart</h2>
-        <div id="cartItems"></div>
-        <div class="cart-bottom">
-            <h3>
-                Total: Rs.
-                <span id="cartTotal">0</span>
-            </h3>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container nav">
+            <a href="index.html" class="logo">
+                THRIFT BY SUHAIB
+            </a>
+            <nav class="nav-links">
+                <a href="#shop">Shop</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="cart-btn" onclick="openCart()">
+                Cart <span id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container hero-content">
+            <p class="hero-small">CURATED THRIFT COLLECTION</p>
+            <h1>
+                FIND YOUR<br>
+                NEXT PIECE.
+            </h1>
+            <p class="hero-text">
+                Unique thrifted footwear and uppers,
+                carefully selected for your style.
+            </p>
+            <a href="#shop" class="hero-btn">
+                SHOP NOW
+            </a>
+        </div>
+    </section>
+    <!-- SHOP -->
+    <section class="shop-section" id="shop">
+        <div class="container">
+            <div class="section-heading">
+                <div>
+                    <p class="section-small">OUR COLLECTION</p>
+                    <h2>SHOP</h2>
+                </div>
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="search-input"
+                        placeholder="Search products..."
+                        oninput="searchProducts()"
+                    >
+                </div>
+            </div>
+            <!-- CATEGORIES -->
+            <div class="categories">
+                <button
+                    class="category-btn active"
+                    onclick="setCategory('all', this)">
+                    ALL
+                </button>
+                <button
+                    class="category-btn"
+                    onclick="setCategory('footwear', this)">
+                    FOOTWEAR
+                </button>
+                <button
+                    class="category-btn"
+                    onclick="setCategory('uppers', this)">
+                    UPPERS
+                </button>
+            </div>
+            <!-- PRODUCTS -->
+            <div id="products-container" class="products-grid">
+                <!-- Products will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+    <!-- ABOUT -->
+    <section class="about-section" id="about">
+        <div class="container about-content">
+            <div>
+                <p class="section-small">ABOUT US</p>
+                <h2>THRIFT.<br>STYLE.<br>YOU.</h2>
+            </div>
+            <div class="about-text">
+                <p>
+                    Thrift by Suhaib is a small independent thrift store
+                    focused on finding unique and stylish pieces at
+                    affordable prices.
+                </p>
+                <p>
+                    Every item is selected individually, so each piece
+                    has its own character.
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+        <div class="container contact-content">
+            <p class="section-small">GET IN TOUCH</p>
+            <h2>
+                HAVE A<br>
+                QUESTION?
+            </h2>
+            <p>
+                Contact us on WhatsApp for orders,
+                availability and product information.
+            </p>
+            <button class="whatsapp-btn" onclick="openWhatsApp()">
+                CHAT ON WHATSAPP
+            </button>
+        </div>
+    </section>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div>
+                <strong>THRIFT BY SUHAIB</strong>
+                <p>Curated thrift. Individual style.</p>
+            </div>
+            <p>
+                © 2026 Thrift by Suhaib
+            </p>
+        </div>
+    </footer>
+    <!-- CART MODAL -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-box">
+            <button class="close-cart" onclick="closeCart()">
+                ×
+            </button>
+            <h2>YOUR CART</h2>
+            <div id="cart-items">
+                <!-- Cart items appear here -->
+            </div>
+            <div class="cart-total">
+                <span>Total</span>
+                <strong id="cart-total">Rs. 0</strong>
+            </div>
             <button
-                class="whatsapp-button"
-                onclick="orderCart()"
-            >
-                Order on WhatsApp
+                class="checkout-btn"
+                onclick="checkoutWhatsApp()">
+                ORDER ON WHATSAPP
             </button>
         </div>
     </div>
-</div>
-<script src="script.js"></script>
-<script>
-    loadProductPage();
-</script>
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
 </body>
 </html>
