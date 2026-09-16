@@ -725,7 +725,23 @@ ORDER ON WHATSAPP
 
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore-compat.js"></script>
 
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBVM33eTfnZIriI9Z8L4V_yg6LmP3d-teg",
+  authDomain: "thrift-by-suhaib.firebaseapp.com",
+  projectId: "thrift-by-suhaib",
+  storageBucket: "thrift-by-suhaib.firebasestorage.app",
+  messagingSenderId: "939565874432",
+  appId: "1:939565874432:web:ff0f373b7551d0d56a87e5",
+  measurementId: "G-MLXMY8H0D1"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+</script>
 <script>
 
 const WHATSAPP_NUMBER = "923001234567";
