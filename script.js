@@ -19,7 +19,8 @@ const products = [
         size: "42",
         condition: "Excellent",
         stock: 1,
-        image: "",
+        // Footwear
+image: "WhatsApp Image 2026-09-14 at 3.10.20 PM.jpeg",
         description: "A unique thrifted footwear piece."
     },
 
@@ -31,19 +32,21 @@ const products = [
         size: "M",
         condition: "Excellent",
         stock: 1,
-        image: "",
+        // Nike Upper
+image: "WhatsApp Image 2026-09-14 at 3.10.18 PM (2).jpeg",
         description: "A carefully selected thrifted upper."
     },
 
     {
         id: "upper-2",
-        name: "Upper 02",
+        name: "rugby jersey",
         price: 1000,
         category: "uppers",
         size: "L",
         condition: "Very Good",
         stock: 1,
-        image: "",
+        // Rugby Jersey
+image: "WhatsApp Image 2026-09-14 at 3.25.43 PM.jpeg",
         description: "A clean and versatile thrifted upper."
     }
 
