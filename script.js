@@ -12,42 +12,39 @@
 const products = [
 
     {
-        id: "footwear-1",
-        name: "Footwear",
-        price: 1500,
-        category: "footwear",
-        size: "42",
-        condition: "Excellent",
-        stock: 1,
-        // Footwear
-        image: "korean-boram.jpeg",
-        description: "A unique thrifted footwear piece."
-    },
-
-    {
         id: "upper-1",
-        name: "Upper 01",
+        name: "Nike Dri-FIT Half Zip",
         price: 1200,
         category: "uppers",
         size: "M",
         condition: "Excellent",
         stock: 1,
-        // Nike Upper
         image: "nike-upper.jpeg",
-        description: "A carefully selected thrifted upper."
+        description: "Premium thrift find with a lightweight and breathable fabric. Neon green and black colorway, perfect for gym, running and casual wear. First come, first served."
+    },
+
+    {
+        id: "footwear-1",
+        name: "Made in Korea | Vintage Mule",
+        price: 1500,
+        category: "footwear",
+        size: "EU 40 / US 7",
+        condition: "Good",
+        stock: 1,
+        image: "footwear.jpeg",
+        description: "Minimal, clean and timeless vintage mule with a soft suede-style upper. Comfortable slip-on design, lightweight and versatile. Thrift by Suhaib — curated pre-loved finds."
     },
 
     {
         id: "upper-2",
-        name: "rugby jersey",
+        name: "Vintage Rugby Jersey",
         price: 1000,
         category: "uppers",
-        size: "L",
-        condition: "Very Good",
+        size: "XL",
+        condition: "9/10",
         stock: 1,
-        // Rugby Jersey
         image: "rugby-jersey.jpeg",
-        description: "A clean and versatile thrifted upper."
+        description: "A unique vintage rugby piece for your streetwear rotation. Blue, white and orange colorway. Preloved. Premium. You. First come, first served."
     }
 
 ];
