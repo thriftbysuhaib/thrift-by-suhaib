@@ -58,7 +58,7 @@ const products = [
 // Apna WhatsApp number yahan baad mein add karna.
 // Pakistan format: 92XXXXXXXXXX
 
-const whatsappNumber = "923001234567";
+const whatsappNumber = "+923372491957";
 
 
 // ==========================================
