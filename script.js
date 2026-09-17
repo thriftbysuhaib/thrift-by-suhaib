@@ -20,7 +20,7 @@ const products = [
         condition: "Excellent",
         stock: 1,
         // Footwear
-        image: "footwear.jpeg",
+        image: "korean-boram.jpeg",
         description: "A unique thrifted footwear piece."
     },
 
@@ -46,7 +46,7 @@ const products = [
         condition: "Very Good",
         stock: 1,
         // Rugby Jersey
-        image: rugby-jersey.jpeg",
+        image: "rugby-jersey.jpeg",
         description: "A clean and versatile thrifted upper."
     }
 
