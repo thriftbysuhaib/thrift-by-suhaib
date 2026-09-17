@@ -20,7 +20,7 @@ const products = [
         condition: "Excellent",
         stock: 1,
         // Footwear
-image: "WhatsApp Image 2026-09-14 at 3.10.20 PM.jpeg",
+        image: "footwear.jpeg",
         description: "A unique thrifted footwear piece."
     },
 
@@ -33,7 +33,7 @@ image: "WhatsApp Image 2026-09-14 at 3.10.20 PM.jpeg",
         condition: "Excellent",
         stock: 1,
         // Nike Upper
-image: "WhatsApp Image 2026-09-14 at 3.10.18 PM (2).jpeg",
+        image: "nike-upper.jpeg",
         description: "A carefully selected thrifted upper."
     },
 
@@ -46,7 +46,7 @@ image: "WhatsApp Image 2026-09-14 at 3.10.18 PM (2).jpeg",
         condition: "Very Good",
         stock: 1,
         // Rugby Jersey
-image: "WhatsApp Image 2026-09-14 at 3.25.43 PM.jpeg",
+        image: rugby-jersey.jpeg",
         description: "A clean and versatile thrifted upper."
     }
 
