@@ -31,7 +31,7 @@ const products = [
         size: "EU 40 / US 7",
         condition: "Good",
         stock: 1,
-        image: "footwear.jpeg",
+        image: "korean-boram.jpeg",
         description: "Minimal, clean and timeless vintage mule with a soft suede-style upper. Comfortable slip-on design, lightweight and versatile. Thrift by Suhaib — curated pre-loved finds."
     },
 
