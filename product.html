@@ -3,314 +3,1381 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Product | Thrift by Suhaib</title>
-    <meta name="description" content="View product details at Thrift by Suhaib.">
+
+    <meta
+        name="description"
+        content="View product details at Thrift by Suhaib."
+    >
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
     <!-- HEADER -->
     <header class="header">
+
         <div class="container nav">
+
             <a href="index.html" class="logo">
                 THRIFT BY SUHAIB
             </a>
+
             <nav class="nav-links">
                 <a href="index.html#shop">Shop</a>
                 <a href="index.html#about">About</a>
                 <a href="index.html#contact">Contact</a>
             </nav>
+
             <button class="cart-btn" onclick="openCart()">
                 Cart <span id="cart-count">0</span>
             </button>
+
         </div>
+
     </header>
+
+
     <!-- PRODUCT DETAIL -->
+
     <main class="product-detail">
+
         <div class="container">
-            <a href="index.html#shop" class="back-link">
+
+            <a
+                href="index.html#shop"
+                class="back-link"
+            >
                 ← BACK TO SHOP
             </a>
+
             <div id="product-detail-container">
-                <!-- Product will load here -->
+                <!-- Product loads here -->
             </div>
+
         </div>
+
     </main>
+
+
     <!-- CART MODAL -->
-    <div id="cart-modal" class="cart-modal">
+
+    <div
+        id="cart-modal"
+        class="cart-modal"
+    >
+
         <div class="cart-box">
-            <button class="close-cart" onclick="closeCart()">
+
+            <button
+                class="close-cart"
+                onclick="closeCart()"
+            >
                 ×
             </button>
+
             <h2>YOUR CART</h2>
+
             <div id="cart-items">
-                <!-- Cart items appear here -->
+                <!-- Cart items -->
             </div>
+
             <div class="cart-total">
+
                 <span>Total</span>
-                <strong id="cart-total">Rs. 0</strong>
+
+                <strong id="cart-total">
+                    Rs. 0
+                </strong>
+
             </div>
+
             <button
                 class="checkout-btn"
-                onclick="checkoutWhatsApp()">
+                onclick="checkoutWhatsApp()"
+            >
                 ORDER ON WHATSAPP
             </button>
+
         </div>
+
     </div>
+
+
+    <!-- ORDER FORM MODAL -->
+
+    <div
+        id="order-modal"
+        class="order-modal"
+    >
+
+        <div class="order-box">
+
+            <button
+                class="close-order"
+                onclick="closeOrderForm()"
+            >
+                ×
+            </button>
+
+            <p class="section-small">
+                COMPLETE YOUR ORDER
+            </p>
+
+            <h2>
+                ORDER FORM
+            </h2>
+
+
+            <form
+                id="order-form"
+                onsubmit="submitOrder(event)"
+            >
+
+                <!-- PRODUCT -->
+
+                <div class="form-group">
+
+                    <label>
+                        PRODUCT
+                    </label>
+
+                    <input
+                        type="text"
+                        id="order-product"
+                        readonly
+                    >
+
+                </div>
+
+
+                <!-- QUANTITY -->
+
+                <div class="form-group">
+
+                    <label>
+                        QUANTITY
+                    </label>
+
+                    <input
+                        type="number"
+                        id="order-quantity"
+                        value="1"
+                        min="1"
+                        max="1"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        FULL NAME
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customer-name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label>
+                        PHONE NUMBER
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="customer-phone"
+                        placeholder="03XXXXXXXXX"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="form-group">
+
+                    <label>
+                        FULL ADDRESS
+                    </label>
+
+                    <textarea
+                        id="customer-address"
+                        placeholder="Enter your complete delivery address"
+                        rows="4"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- NOTE -->
+
+                <div class="form-group">
+
+                    <label>
+                        NOTE (OPTIONAL)
+                    </label>
+
+                    <textarea
+                        id="customer-note"
+                        placeholder="Any additional note..."
+                        rows="3"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="order-form-total">
+
+                    <span>
+                        TOTAL
+                    </span>
+
+                    <strong id="order-total">
+                        Rs. 0
+                    </strong>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="place-order-btn"
+                >
+                    PLACE ORDER ON WHATSAPP
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
     <!-- JAVASCRIPT -->
+
     <script src="script.js?v=2"></script>
+
+
     <script>
+
+        // ==========================================
+        // CURRENT PRODUCT
+        // ==========================================
+
+        let selectedProduct = null;
+
+
         // ==========================================
         // LOAD PRODUCT
         // ==========================================
+
         function loadProductPage() {
+
             const container =
-                document.getElementById("product-detail-container");
+                document.getElementById(
+                    "product-detail-container"
+                );
+
+
             const params =
-                new URLSearchParams(window.location.search);
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
             const productId =
                 params.get("id");
+
+
             const product =
                 products.find(function (item) {
+
                     return item.id === productId;
+
                 });
+
+
             if (!product) {
+
                 container.innerHTML = `
+
                     <div class="no-products">
-                        <h2>PRODUCT NOT FOUND</h2>
-                        <p>This product may no longer be available.</p>
+
+                        <h2>
+                            PRODUCT NOT FOUND
+                        </h2>
+
+                        <p>
+                            This product may no longer be available.
+                        </p>
+
                         <br>
+
                         <a href="index.html#shop">
                             ← Return to shop
                         </a>
+
                     </div>
+
                 `;
+
                 return;
+
             }
+
+
+            selectedProduct = product;
+
+
             document.title =
-                product.name + " | Thrift by Suhaib";
+                product.name +
+                " | Thrift by Suhaib";
+
+
             const availability =
                 product.stock > 0
                     ? "AVAILABLE"
                     : "SOLD OUT";
+
+
             const button =
                 product.stock > 0
+
                     ? `
+
                         <button
                             class="checkout-btn"
-                            onclick="orderProduct('${product.id}')">
+                            onclick="openOrderForm()"
+                        >
                             ORDER ON WHATSAPP
                         </button>
+
                         <button
                             class="add-detail-cart"
-                            onclick="addToCart('${product.id}')">
+                            onclick="addToCart('${product.id}')"
+                        >
                             ADD TO CART
                         </button>
+
                     `
+
                     : `
+
                         <button
                             class="checkout-btn"
-                            disabled>
+                            disabled
+                        >
                             SOLD OUT
                         </button>
+
                     `;
+
+
             const imageHTML =
                 product.image &&
                 product.image.trim() !== ""
-                ? `
-                    <img
-                        src="${product.image}"
-                        alt="${product.name}">
-                  `
-                : `
-                    <div class="detail-no-image">
-                        PRODUCT IMAGE
-                    </div>
-                  `;
+
+                    ? `
+
+                        <img
+                            src="${product.image}"
+                            alt="${product.name}"
+                        >
+
+                    `
+
+                    : `
+
+                        <div class="detail-no-image">
+                            PRODUCT IMAGE
+                        </div>
+
+                    `;
+
+
             container.innerHTML = `
+
                 <div class="product-detail-grid">
+
+
                     <!-- IMAGE -->
+
                     <div class="product-detail-image">
+
                         ${imageHTML}
+
                     </div>
+
+
                     <!-- INFORMATION -->
+
                     <div class="product-detail-info">
+
                         <p class="product-category">
                             ${product.category}
                         </p>
+
+
                         <h1>
                             ${product.name}
                         </h1>
+
+
                         <div class="detail-price">
-                            Rs. ${Number(product.price).toLocaleString()}
+
+                            Rs.
+                            ${Number(
+                                product.price
+                            ).toLocaleString()}
+
                         </div>
+
+
                         <div class="product-specs">
+
+
                             <div>
-                                <span>SIZE</span>
+
+                                <span>
+                                    SIZE
+                                </span>
+
                                 <strong>
                                     ${product.size || "N/A"}
                                 </strong>
+
                             </div>
+
+
                             <div>
-                                <span>CONDITION</span>
+
+                                <span>
+                                    CONDITION
+                                </span>
+
                                 <strong>
                                     ${product.condition || "N/A"}
                                 </strong>
+
                             </div>
+
+
                             <div>
-                                <span>AVAILABILITY</span>
+
+                                <span>
+                                    AVAILABILITY
+                                </span>
+
                                 <strong>
                                     ${availability}
                                 </strong>
+
                             </div>
+
+
                         </div>
+
+
                         <div class="detail-description">
-                            <h3>DESCRIPTION</h3>
+
+                            <h3>
+                                DESCRIPTION
+                            </h3>
+
                             <p>
-                                ${product.description || "No description available."}
+                                ${
+                                    product.description ||
+                                    "No description available."
+                                }
                             </p>
+
                         </div>
+
+
                         <div class="detail-actions">
+
                             ${button}
+
                         </div>
+
+
                     </div>
+
                 </div>
+
             `;
+
         }
-        // Load page
+
+
+        // ==========================================
+        // OPEN ORDER FORM
+        // ==========================================
+
+        function openOrderForm() {
+
+            if (!selectedProduct) {
+                return;
+            }
+
+
+            if (selectedProduct.stock <= 0) {
+
+                alert(
+                    "Sorry, this product is sold out."
+                );
+
+                return;
+
+            }
+
+
+            const modal =
+                document.getElementById(
+                    "order-modal"
+                );
+
+
+            const productInput =
+                document.getElementById(
+                    "order-product"
+                );
+
+
+            const quantityInput =
+                document.getElementById(
+                    "order-quantity"
+                );
+
+
+            const totalElement =
+                document.getElementById(
+                    "order-total"
+                );
+
+
+            productInput.value =
+                selectedProduct.name;
+
+
+            quantityInput.value = 1;
+
+
+            quantityInput.max =
+                selectedProduct.stock;
+
+
+            totalElement.textContent =
+                "Rs. " +
+                Number(
+                    selectedProduct.price
+                ).toLocaleString();
+
+
+            modal.classList.add("show");
+
+        }
+
+
+        // ==========================================
+        // CLOSE ORDER FORM
+        // ==========================================
+
+        function closeOrderForm() {
+
+            const modal =
+                document.getElementById(
+                    "order-modal"
+                );
+
+
+            if (modal) {
+
+                modal.classList.remove("show");
+
+            }
+
+        }
+
+
+        // ==========================================
+        // UPDATE ORDER TOTAL
+        // ==========================================
+
+        document.addEventListener(
+            "input",
+            function (event) {
+
+                if (
+                    event.target.id !==
+                    "order-quantity"
+                ) {
+
+                    return;
+
+                }
+
+
+                if (!selectedProduct) {
+                    return;
+                }
+
+
+                let quantity =
+                    Number(
+                        event.target.value
+                    );
+
+
+                if (quantity < 1) {
+                    quantity = 1;
+                }
+
+
+                if (
+                    quantity >
+                    selectedProduct.stock
+                ) {
+
+                    quantity =
+                        selectedProduct.stock;
+
+                }
+
+
+                event.target.value =
+                    quantity;
+
+
+                const total =
+                    Number(
+                        selectedProduct.price
+                    ) * quantity;
+
+
+                document.getElementById(
+                    "order-total"
+                ).textContent =
+                    "Rs. " +
+                    total.toLocaleString();
+
+            }
+        );
+
+
+        // ==========================================
+        // SUBMIT ORDER
+        // ==========================================
+
+        function submitOrder(event) {
+
+            event.preventDefault();
+
+
+            if (!selectedProduct) {
+                return;
+            }
+
+
+            const name =
+                document.getElementById(
+                    "customer-name"
+                ).value.trim();
+
+
+            const phone =
+                document.getElementById(
+                    "customer-phone"
+                ).value.trim();
+
+
+            const address =
+                document.getElementById(
+                    "customer-address"
+                ).value.trim();
+
+
+            const note =
+                document.getElementById(
+                    "customer-note"
+                ).value.trim();
+
+
+            const quantity =
+                Number(
+                    document.getElementById(
+                        "order-quantity"
+                    ).value
+                );
+
+
+            const total =
+                Number(
+                    selectedProduct.price
+                ) * quantity;
+
+
+            let message =
+
+                "Assalamualaikum! I want to place an order.\n\n" +
+
+                "PRODUCT\n" +
+                selectedProduct.name +
+                "\n\n" +
+
+                "QUANTITY\n" +
+                quantity +
+                "\n\n" +
+
+                "PRICE\n" +
+                "Rs. " +
+                Number(
+                    selectedProduct.price
+                ).toLocaleString() +
+                "\n\n" +
+
+                "TOTAL\n" +
+                "Rs. " +
+                total.toLocaleString() +
+                "\n\n" +
+
+                "CUSTOMER DETAILS\n" +
+
+                "Name: " +
+                name +
+                "\n" +
+
+                "Phone: " +
+                phone +
+                "\n" +
+
+                "Address: " +
+                address;
+
+
+            if (note) {
+
+                message +=
+                    "\n\nNote: " +
+                    note;
+
+            }
+
+
+            const url =
+                "https://wa.me/" +
+                whatsappNumber +
+                "?text=" +
+                encodeURIComponent(
+                    message
+                );
+
+
+            window.open(
+                url,
+                "_blank"
+            );
+
+        }
+
+
+        // ==========================================
+        // CLOSE ORDER FORM OUTSIDE
+        // ==========================================
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const modal =
+                    document.getElementById(
+                        "order-modal"
+                    );
+
+
+                if (
+                    event.target === modal &&
+                    modal.classList.contains("show")
+                ) {
+
+                    closeOrderForm();
+
+                }
+
+            }
+        );
+
+
+        // ==========================================
+        // LOAD PAGE
+        // ==========================================
+
         document.addEventListener(
             "DOMContentLoaded",
             loadProductPage
         );
+
     </script>
+
+
     <!-- PRODUCT PAGE STYLES -->
+
     <style>
+
         .product-detail {
+
             padding: 70px 0 110px;
+
             min-height: 80vh;
+
         }
+
+
         .back-link {
+
             display: inline-block;
+
             margin-bottom: 40px;
+
             font-size: 12px;
+
             font-weight: 800;
+
             letter-spacing: 1px;
+
         }
+
+
         .back-link:hover {
+
             opacity: 0.5;
+
         }
+
+
         .product-detail-grid {
+
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
+
+            grid-template-columns:
+                1.1fr 0.9fr;
+
             gap: 70px;
+
             align-items: start;
+
         }
+
+
         .product-detail-image {
+
             width: 100%;
+
             aspect-ratio: 1 / 1;
+
             background: #e6e6e2;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             overflow: hidden;
+
         }
+
+
         .product-detail-image img {
+
             width: 100%;
+
             height: 100%;
+
             object-fit: cover;
+
         }
+
+
         .detail-no-image {
+
             font-size: 13px;
+
             font-weight: 800;
+
             letter-spacing: 2px;
+
             color: #777;
+
         }
+
+
         .product-detail-info {
+
             padding-top: 10px;
+
         }
+
+
         .product-detail-info h1 {
-            font-size: clamp(45px, 6vw, 80px);
+
+            font-size:
+                clamp(45px, 6vw, 80px);
+
             line-height: 0.95;
+
             letter-spacing: -3px;
+
             margin-bottom: 20px;
+
         }
+
+
         .detail-price {
+
             font-size: 25px;
+
             font-weight: 800;
+
             margin-bottom: 40px;
+
         }
+
+
         .product-specs {
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
+
+            border-top:
+                1px solid #ccc;
+
+            border-bottom:
+                1px solid #ccc;
+
             margin-bottom: 35px;
+
         }
+
+
         .product-specs div {
+
             display: flex;
-            justify-content: space-between;
+
+            justify-content:
+                space-between;
+
             gap: 20px;
+
             padding: 15px 0;
-            border-bottom: 1px solid #ddd;
+
+            border-bottom:
+                1px solid #ddd;
+
         }
+
+
         .product-specs div:last-child {
+
             border-bottom: none;
+
         }
+
+
         .product-specs span {
+
             font-size: 11px;
+
             color: #777;
+
             font-weight: 800;
+
             letter-spacing: 1px;
+
         }
+
+
         .product-specs strong {
+
             font-size: 13px;
+
             text-transform: uppercase;
+
         }
+
+
         .detail-description {
+
             margin-bottom: 35px;
+
         }
+
+
         .detail-description h3 {
+
             font-size: 12px;
+
             letter-spacing: 1px;
+
             margin-bottom: 12px;
+
         }
+
+
         .detail-description p {
+
             color: #555;
+
             font-size: 16px;
+
         }
+
+
         .detail-actions {
+
             display: flex;
+
             flex-direction: column;
+
             gap: 10px;
+
         }
+
+
         .detail-actions .checkout-btn {
+
             border: none;
+
         }
+
+
         .add-detail-cart {
+
             width: 100%;
+
             background: transparent;
+
             border: 1px solid #111;
+
             color: #111;
+
             padding: 15px;
+
             font-weight: 800;
+
         }
+
+
         .add-detail-cart:hover {
+
             background: #111;
+
             color: white;
+
         }
+
+
         .checkout-btn:disabled {
+
             cursor: not-allowed;
+
             opacity: 0.5;
+
         }
+
+
+        /* =====================================
+           ORDER FORM
+        ===================================== */
+
+        .order-modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.65);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 9999;
+
+        }
+
+
+        .order-modal.show {
+
+            display: flex;
+
+        }
+
+
+        .order-box {
+
+            width: 100%;
+
+            max-width: 550px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background: white;
+
+            padding: 40px;
+
+            position: relative;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.25);
+
+        }
+
+
+        .close-order {
+
+            position: absolute;
+
+            top: 15px;
+
+            right: 18px;
+
+            border: none;
+
+            background: transparent;
+
+            font-size: 30px;
+
+            cursor: pointer;
+
+            line-height: 1;
+
+        }
+
+
+        .order-box h2 {
+
+            font-size: 42px;
+
+            line-height: 1;
+
+            margin:
+                5px 0 30px;
+
+            letter-spacing: -2px;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .form-group input,
+
+        .form-group textarea {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            border: 1px solid #ccc;
+
+            background: #fafafa;
+
+            padding: 13px;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            outline: none;
+
+        }
+
+
+        .form-group input:focus,
+
+        .form-group textarea:focus {
+
+            border-color: #111;
+
+        }
+
+
+        .form-group input[readonly] {
+
+            background: #eee;
+
+            cursor: not-allowed;
+
+        }
+
+
+        .form-group textarea {
+
+            resize: vertical;
+
+        }
+
+
+        .order-form-total {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            border-top:
+                1px solid #ccc;
+
+            border-bottom:
+                1px solid #ccc;
+
+            padding: 18px 0;
+
+            margin:
+                25px 0 20px;
+
+        }
+
+
+        .order-form-total span {
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .order-form-total strong {
+
+            font-size: 20px;
+
+        }
+
+
+        .place-order-btn {
+
+            width: 100%;
+
+            border: none;
+
+            background: #111;
+
+            color: white;
+
+            padding: 16px;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+
+            cursor: pointer;
+
+        }
+
+
+        .place-order-btn:hover {
+
+            opacity: 0.8;
+
+        }
+
+
         @media (max-width: 800px) {
+
             .product-detail {
-                padding: 45px 0 80px;
+
+                padding:
+                    45px 0 80px;
+
             }
+
+
             .product-detail-grid {
+
                 grid-template-columns: 1fr;
+
                 gap: 40px;
+
             }
+
+
             .product-detail-info h1 {
+
                 font-size: 52px;
+
             }
+
+
+            .order-box {
+
+                padding: 30px 22px;
+
+            }
+
+
+            .order-box h2 {
+
+                font-size: 36px;
+
+            }
+
         }
+
     </style>
+
 </body>
 </html>
